@@ -1,0 +1,77 @@
+[
+  {
+    "tag": "技术对比",
+    "question": "LangGraph、CrewAI、AutoGen 三个多智能体框架怎么选？",
+    "seconds": 42.1,
+    "rounds": 1,
+    "scores": [
+      7
+    ],
+    "passed": true,
+    "issues": [
+      "性能、调试难度与学习成本这一子问题基本未回答，报告自认资料缺口，但这是原问题六个子问题之一，导致覆盖度不完整。",
+      "关键事实\"AutoGen 于 2026 年 4 月进入维护模式、Microsoft Agent Framework 1.0 于 2026 年 4 月 GA\"仅由博客类来源 [6][9][29] 支撑，缺乏官方公告佐证，且该事实是全文结论的硬约束，风险较高。",
+      "社区规模数据自相矛盾且未解决：报告采信 AutoGen 42K > CrewAI 31.2K > LangGraph 12.8K，但 LangGraph 作为 LangChain 生态主力，12.8K 明显偏低，与\"LangGraph 生产就绪度最高\"的论断存在张力。",
+      "CrewAI 与 AutoGen 在 HITL、工具调用与可观测性维度被明确标注为信息缺口，功能对比表实际不完整，削弱了\"关键功能维度对比\"的说服力。",
+      "引用 [17][18][21][24][25] 与多智能体框架无关（后端/JS/小程序/FastAPI 基准），属于无效引用，应删除或替换。"
+    ],
+    "researchers": 6,
+    "kept_sources_per_researcher": [
+      5,
+      3,
+      8,
+      3,
+      6,
+      9
+    ],
+    "report_chars": 9327,
+    "tokens": {
+      "deepseek-flash": {
+        "in": 39734,
+        "out": 9164
+      }
+    },
+    "citations": 110,
+    "refs": 27,
+    "invalid_citation_ids": [],
+    "unused_refs": 0,
+    "timeline": [
+      [
+        "planner",
+        3.4
+      ],
+      [
+        "researcher",
+        9.2
+      ],
+      [
+        "researcher",
+        12.3
+      ],
+      [
+        "researcher",
+        12.3
+      ],
+      [
+        "researcher",
+        12.8
+      ],
+      [
+        "researcher",
+        12.8
+      ],
+      [
+        "researcher",
+        20.7
+      ],
+      [
+        "writer",
+        38.9
+      ],
+      [
+        "reviewer",
+        42.1
+      ]
+    ]
+  }
+]

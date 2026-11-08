@@ -1,0 +1,336 @@
+{
+ "k": 5,
+ "n": 15,
+ "summary": {
+  "vector": {
+   "hit@1": 0.867,
+   "hit@3": 0.867,
+   "hit@5": 0.867,
+   "mrr": 0.867,
+   "avg_ms": 1469
+  },
+  "bm25": {
+   "hit@1": 0.733,
+   "hit@3": 0.733,
+   "hit@5": 0.8,
+   "mrr": 0.747,
+   "avg_ms": 78
+  },
+  "hybrid": {
+   "hit@1": 0.733,
+   "hit@3": 0.933,
+   "hit@5": 1.0,
+   "mrr": 0.824,
+   "avg_ms": 1404
+  },
+  "hybrid_rerank": {
+   "hit@1": 0.933,
+   "hit@3": 0.933,
+   "hit@5": 0.933,
+   "mrr": 0.933,
+   "avg_ms": 4515
+  }
+ },
+ "detail": [
+  {
+   "mode": "vector",
+   "q": "RAG 论文里检索器和生成器分别用的是什么模型？",
+   "rank": null
+  },
+  {
+   "mode": "vector",
+   "q": "RAG-Sequence 和 RAG-Token 有什么区别？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "ReAct 在 ALFWorld 和 WebShop 上比模仿学习和强化学习方法提升了多少成功率？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "What does ReAct interleave when prompting a language model?",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "长上下文中相关信息放在中间位置时，模型表现呈现什么曲线？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "LangGraph 中并行节点写同一个字段，如何避免互相覆盖？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "Send API 适合什么场景？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "程序崩溃后如何让 LangGraph 从断点继续执行？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "LangGraph 默认的 recursion_limit 是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "BM25 的 k1 和 b 参数分别控制什么，常用取值是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "RRF 融合的公式和常数 k 一般取多少？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "为什么重排模型只用于少量候选？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "北斗平台合同审查任务的超时时间是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "星河平台的值班热线和 P0 告警响应时限是什么？",
+   "rank": 1
+  },
+  {
+   "mode": "vector",
+   "q": "语义缓存的命中阈值和有效期是多少？",
+   "rank": null
+  },
+  {
+   "mode": "bm25",
+   "q": "RAG 论文里检索器和生成器分别用的是什么模型？",
+   "rank": null
+  },
+  {
+   "mode": "bm25",
+   "q": "RAG-Sequence 和 RAG-Token 有什么区别？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "ReAct 在 ALFWorld 和 WebShop 上比模仿学习和强化学习方法提升了多少成功率？",
+   "rank": 5
+  },
+  {
+   "mode": "bm25",
+   "q": "What does ReAct interleave when prompting a language model?",
+   "rank": null
+  },
+  {
+   "mode": "bm25",
+   "q": "长上下文中相关信息放在中间位置时，模型表现呈现什么曲线？",
+   "rank": null
+  },
+  {
+   "mode": "bm25",
+   "q": "LangGraph 中并行节点写同一个字段，如何避免互相覆盖？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "Send API 适合什么场景？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "程序崩溃后如何让 LangGraph 从断点继续执行？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "LangGraph 默认的 recursion_limit 是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "BM25 的 k1 和 b 参数分别控制什么，常用取值是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "RRF 融合的公式和常数 k 一般取多少？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "为什么重排模型只用于少量候选？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "北斗平台合同审查任务的超时时间是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "星河平台的值班热线和 P0 告警响应时限是什么？",
+   "rank": 1
+  },
+  {
+   "mode": "bm25",
+   "q": "语义缓存的命中阈值和有效期是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "RAG 论文里检索器和生成器分别用的是什么模型？",
+   "rank": 3
+  },
+  {
+   "mode": "hybrid",
+   "q": "RAG-Sequence 和 RAG-Token 有什么区别？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "ReAct 在 ALFWorld 和 WebShop 上比模仿学习和强化学习方法提升了多少成功率？",
+   "rank": 3
+  },
+  {
+   "mode": "hybrid",
+   "q": "What does ReAct interleave when prompting a language model?",
+   "rank": 5
+  },
+  {
+   "mode": "hybrid",
+   "q": "长上下文中相关信息放在中间位置时，模型表现呈现什么曲线？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "LangGraph 中并行节点写同一个字段，如何避免互相覆盖？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "Send API 适合什么场景？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "程序崩溃后如何让 LangGraph 从断点继续执行？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "LangGraph 默认的 recursion_limit 是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "BM25 的 k1 和 b 参数分别控制什么，常用取值是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "RRF 融合的公式和常数 k 一般取多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "为什么重排模型只用于少量候选？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "北斗平台合同审查任务的超时时间是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "星河平台的值班热线和 P0 告警响应时限是什么？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid",
+   "q": "语义缓存的命中阈值和有效期是多少？",
+   "rank": 2
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "RAG 论文里检索器和生成器分别用的是什么模型？",
+   "rank": null
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "RAG-Sequence 和 RAG-Token 有什么区别？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "ReAct 在 ALFWorld 和 WebShop 上比模仿学习和强化学习方法提升了多少成功率？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "What does ReAct interleave when prompting a language model?",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "长上下文中相关信息放在中间位置时，模型表现呈现什么曲线？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "LangGraph 中并行节点写同一个字段，如何避免互相覆盖？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "Send API 适合什么场景？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "程序崩溃后如何让 LangGraph 从断点继续执行？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "LangGraph 默认的 recursion_limit 是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "BM25 的 k1 和 b 参数分别控制什么，常用取值是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "RRF 融合的公式和常数 k 一般取多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "为什么重排模型只用于少量候选？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "北斗平台合同审查任务的超时时间是多少？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "星河平台的值班热线和 P0 告警响应时限是什么？",
+   "rank": 1
+  },
+  {
+   "mode": "hybrid_rerank",
+   "q": "语义缓存的命中阈值和有效期是多少？",
+   "rank": 1
+  }
+ ]
+}

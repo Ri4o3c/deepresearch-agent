@@ -1,0 +1,17 @@
+[
+ {"q": "RAG 论文里检索器和生成器分别用的是什么模型？", "file": "arxiv_2005.11401.pdf", "kw": ["Dense Passage Retriever", "DPR", "BART"], "answer": "检索器是 DPR（Dense Passage Retriever），生成器是 BART 序列到序列模型。"},
+ {"q": "RAG-Sequence 和 RAG-Token 有什么区别？", "file": "arxiv_2005.11401.pdf", "kw": ["RAG-Token", "RAG-Sequence"], "answer": "RAG-Sequence 整个输出序列使用同一篇检索文档；RAG-Token 每个 token 可以依据不同的文档生成。"},
+ {"q": "ReAct 在 ALFWorld 和 WebShop 上比模仿学习和强化学习方法提升了多少成功率？", "file": "arxiv_2210.03629.pdf", "kw": ["34%", "absolute success rate"], "answer": "绝对成功率分别提升 34% 和 10%。"},
+ {"q": "What does ReAct interleave when prompting a language model?", "file": "arxiv_2210.03629.pdf", "kw": ["reasoning traces", "interleaved"], "answer": "ReAct interleaves reasoning traces and task-specific actions."},
+ {"q": "长上下文中相关信息放在中间位置时，模型表现呈现什么曲线？", "file": "arxiv_2307.03172.pdf", "kw": ["U-shaped"], "answer": "呈 U 型曲线：信息在开头或结尾时表现最好，在中间时明显下降。"},
+ {"q": "LangGraph 中并行节点写同一个字段，如何避免互相覆盖？", "file": "langgraph_notes.md", "kw": ["operator.add", "reducer"], "answer": "用 reducer，例如 Annotated[list, operator.add] 把并行结果拼接。"},
+ {"q": "Send API 适合什么场景？", "file": "langgraph_notes.md", "kw": ["Send API", "扇出"], "answer": "适合 map-reduce 式的动态扇出，运行时为每个子任务启动并行节点实例。"},
+ {"q": "程序崩溃后如何让 LangGraph 从断点继续执行？", "file": "langgraph_notes.md", "kw": ["thread_id", "checkpointer"], "answer": "编译时配置 checkpointer，用同一个 thread_id 调用 graph.stream(None, config) 从最近检查点继续。"},
+ {"q": "LangGraph 默认的 recursion_limit 是多少？", "file": "langgraph_notes.md", "kw": ["recursion_limit"], "answer": "默认 25 步。"},
+ {"q": "BM25 的 k1 和 b 参数分别控制什么，常用取值是多少？", "file": "hybrid_retrieval.md", "kw": ["k1", "0.75"], "answer": "k1 控制词频饱和速度，常用 1.2 到 2.0；b 控制长度归一化强度，常用 0.75。"},
+ {"q": "RRF 融合的公式和常数 k 一般取多少？", "file": "hybrid_retrieval.md", "kw": ["1/(k + rank)", "60"], "answer": "得分为各路 1/(k+rank) 之和，k 通常取 60。"},
+ {"q": "为什么重排模型只用于少量候选？", "file": "hybrid_retrieval.md", "kw": ["交叉编码器", "cross-encoder"], "answer": "重排用交叉编码器逐对打分，精度高但慢，所以只对召回后的少量候选使用。"},
+ {"q": "北斗平台合同审查任务的超时时间是多少？", "file": "xinghe_ops_handbook.txt", "kw": ["120 秒"], "answer": "120 秒（默认任务为 45 秒）。"},
+ {"q": "星河平台的值班热线和 P0 告警响应时限是什么？", "file": "xinghe_ops_handbook.txt", "kw": ["8812", "5 分钟"], "answer": "值班热线内线 8812，P0 告警需 5 分钟内响应。"},
+ {"q": "语义缓存的命中阈值和有效期是多少？", "file": "xinghe_ops_handbook.txt", "kw": ["0.92"], "answer": "命中阈值为余弦相似度 0.92，有效期 24 小时。"}
+]

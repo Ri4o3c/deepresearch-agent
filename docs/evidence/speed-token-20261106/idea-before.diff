@@ -1,0 +1,22 @@
+diff --git a/.idea/runConfigurations/web_dev.xml b/.idea/runConfigurations/web_dev.xml
+index ba5de7b..21ecabb 100644
+--- a/.idea/runConfigurations/web_dev.xml
++++ b/.idea/runConfigurations/web_dev.xml
+@@ -1,12 +1,13 @@
+-<component name="ProjectRunConfigurationManager">
++﻿<component name="ProjectRunConfigurationManager">
+   <configuration default="false" name="web dev" type="js.build_tools.npm">
+     <package-json value="$PROJECT_DIR$/web/package.json" />
+     <command value="run" />
+     <scripts>
+       <script value="dev" />
+     </scripts>
+-    <node-interpreter value="project" />
++    <node-interpreter value="C:\Program Files\nodejs\node.exe" />
++    <package-manager value="C:\Program Files\nodejs\node_modules\npm" />
+     <envs />
+     <method v="2" />
+   </configuration>
+-</component>
+\ No newline at end of file
++</component>

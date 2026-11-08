@@ -1,0 +1,1 @@
+{"started": "2026-11-06T23:31:34.482471+08:00", "ended": "2026-11-06T23:31:37.202540+08:00", "elapsed_s": 2.7229839000065112, "passed": 99, "failed": 0, "exit_code": 0, "failure": null, "guards": {"network": 0, "external_client": 0, "forbidden_file": 0}, "fail_fast": true, "rerun": false}

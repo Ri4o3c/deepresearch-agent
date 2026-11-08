@@ -1,0 +1,26 @@
+{
+ "tag": "round1",
+ "upload_ok": 3,
+ "upload_s": 16.4,
+ "chunks": 364,
+ "seconds": 48.6,
+ "researchers": 6,
+ "local_per_researcher": [
+  2,
+  2,
+  0,
+  0,
+  2,
+  2
+ ],
+ "review_scores": [
+  8
+ ],
+ "report_chars": 11082,
+ "local_refs": 4,
+ "mentions_120s": true,
+ "mentions_8812": true,
+ "local_link_ok": false,
+ "kb_after_cleanup": 0,
+ "pass": false
+}

@@ -1,0 +1,26 @@
+{
+  "after_context_chars": 6000,
+  "before_context_chars": 12086,
+  "cold": {
+    "cache_bypass": 0,
+    "cache_hits": 0,
+    "cache_misses": 1,
+    "context_chars": 0,
+    "fetch_calls": 2,
+    "search_calls": 1
+  },
+  "mode": "deterministic_mock",
+  "new_fetch_top": 2,
+  "old_fetch_top": 3,
+  "real_llm_calls": 0,
+  "real_research_requests": 0,
+  "tokens": null,
+  "warm": {
+    "cache_bypass": 0,
+    "cache_hits": 1,
+    "cache_misses": 1,
+    "context_chars": 0,
+    "fetch_calls": 2,
+    "search_calls": 1
+  }
+}

@@ -1,0 +1,272 @@
+diff --git a/app/researcher.py b/app/researcher.py
+index a7b2393..8037d47 100644
+--- a/app/researcher.py
++++ b/app/researcher.py
+@@ -6,6 +6,7 @@ from app.llm import get_llm
+ from app.utils import today_hint
+ from app.rag import kb_search
+ from app.search import web_search
++from app.search.session import SearchSession, unique_sources, url_key
+ 
+ 
+ 
+@@ -37,6 +38,28 @@ class Queries(BaseModel):
+ 
+ 
+ MIN_SOURCES = 3
++CONTEXT_LIMIT = max(1, int(os.environ.get("RESEARCH_CONTEXT_LIMIT", "6000")))
++SOURCE_LIMIT = max(1, int(os.environ.get("SEARCH_CONTENT_LIMIT", "1500")))
++
++
++def build_context(sources):
++    """Bound the complete retrieval context including headers; retain only supplied evidence/IDs."""
++    kept, blocks, used = [], [], 0
++    # Preserve local evidence first, including per-page URL/metadata.
++    ordered = [s for s in sources if s.get("type") == "local"] + [s for s in sources if s.get("type") != "local"]
++    for source in unique_sources(ordered):
++        tag = "本地文档" if source.get("type") == "local" else "网页"
++        header = f"[{source['id']}]（{tag}）{source['title']}\n"
++        available = CONTEXT_LIMIT - used - (2 if blocks else 0) - len(header)
++        if available <= 0:
++            continue
++        content = (source.get("content") or "")[:min(SOURCE_LIMIT, available)]
++        if not content:
++            continue
++        blocks.append(header + content)
++        used += len(header) + len(content) + (2 if len(blocks) > 1 else 0)
++        kept.append(dict(source, content=content))
++    return "\n\n".join(blocks), kept
+ 
+ 
+ def rewrite_queries(question: str) -> list[str]:
+@@ -56,7 +79,19 @@ def filter_sources(question: str, sources: list[dict]) -> list[dict]:
+     sources = [s for s in sources if s["score"] >= 0.3]
+     if not sources:
+         return []
+-    brief = "\n".join(f"[{s['id']}] {s['title']}：{s['content'][:200]}" for s in sources)
++    # Keep each candidate represented; bound titles as well as content.
++    lines, candidates, used = [], [], 0
++    for source in sources:
++        line = f"[{source['id']}] {source['title'][:200]}：{source['content'][:200]}"
++        if used + len(line) + bool(lines) > CONTEXT_LIMIT:
++            continue
++        used += len(line) + bool(lines)
++        lines.append(line)
++        candidates.append(source)
++    sources = candidates
++    if not sources:
++        return []
++    brief = "\n".join(lines)
+     llm = get_llm(temperature=0).with_structured_output(Relevance, method="function_calling")
+     rel = llm.invoke([
+         SystemMessage("判断每条资料是否与子问题主题直接相关。只要沾边的广告、同名无关内容一律剔除。"),
+@@ -86,15 +121,23 @@ def search_local(question: str) -> list[dict]:
+ 
+ 
+ def research(question: str) -> tuple[ResearchNote, list[dict]]:
++    with SearchSession() as session:
++        return _research(question, session)
++
++
++def _research(question, session):
+     local = search_local(question)
+-    raw = [dict(s, id=i + 1) for i, s in enumerate(search_web(question, 8) + local)]
++    raw = [dict(s, id=i + 1) for i, s in enumerate(unique_sources(search_web(question, 8) + local))]
+     sources = filter_sources(question, raw)
+     if len(sources) < MIN_SOURCES:  # 检索落空：改写查询再搜，合并去重
+-        seen = {s["url"] for s in sources}
++        seen = {url_key(s) for s in sources}
+         extra = []
+         for q in rewrite_queries(question):
+-            extra += [s for s in search_web(q, 5) if s["url"] not in seen]
+-            seen |= {s["url"] for s in extra}
++            for source in search_web(q, 5):
++                key = url_key(source)
++                if key not in seen:
++                    seen.add(key)
++                    extra.append(dict(source, id=len(raw) + len(extra) + 1))
+         sources += filter_sources(question, extra)
+         sources = [dict(s, id=i + 1) for i, s in enumerate(sources)]
+         print(f"    [重试] {question[:20]}… 改写查询后共 {len(sources)} 条")
+@@ -102,8 +145,10 @@ def research(question: str) -> tuple[ResearchNote, list[dict]]:
+         return ResearchNote(question=question, findings=[]), []
+     n_local = sum(s.get("type") == "local" for s in sources)
+     print(f"    [过滤] {question[:20]}… 保留 {len(sources)}/{len(raw)} 条（本地 {n_local}）")
+-    context = "\n\n".join(f"[{s['id']}]（{'本地文档' if s.get('type') == 'local' else '网页'}）{s['title']}\n{s['content']}"
+-                          for s in sources)
++    context, sources = build_context(sources)
++    session.metrics["context_chars"] = len(context)
++    if not sources:
++        return ResearchNote(question=question, findings=[]), []
+     llm = get_llm(temperature=0).with_structured_output(ResearchNote, method="function_calling")
+     note = llm.invoke([
+         SystemMessage(SYSTEM_PROMPT + "\n" + today_hint()),
+diff --git a/app/search/__init__.py b/app/search/__init__.py
+index b03e580..666e646 100644
+--- a/app/search/__init__.py
++++ b/app/search/__init__.py
+@@ -6,14 +6,15 @@ import os
+ import time
+ from concurrent.futures import ThreadPoolExecutor
+ from typing import Protocol
++from app.search.session import SearchSession, current_session, unique_sources
+ 
+ import httpx
+ 
+ from app import observability
+ 
+ log = logging.getLogger("search")
+-CONTENT_LIMIT = 1500
+-FETCH_TOP = int(os.environ.get("SEARCH_FETCH_TOP", "3"))      # 只给前几条抓全文，控制耗时
++CONTENT_LIMIT = max(1, int(os.environ.get("SEARCH_CONTENT_LIMIT", "1500")))
++FETCH_TOP = max(0, int(os.environ.get("SEARCH_FETCH_TOP", "2")))      # 只给前几条抓全文，控制耗时
+ FETCH_TIMEOUT = float(os.environ.get("SEARCH_FETCH_TIMEOUT", "6"))
+ FETCH_WORKERS = 4
+ 
+@@ -92,21 +93,41 @@ def fetch_text(url: str) -> str:
+         return ""
+ 
+ 
+-def _enrich(rows: list[dict]) -> None:
++def _enrich(rows: list[dict], session: SearchSession | None = None) -> None:
+     todo = [r for r in rows[:FETCH_TOP] if not r.get("full")]
+     if not todo:
+         return
++    if session is not None:
++        session.metrics["fetch_calls"] += len(todo)
+     with ThreadPoolExecutor(FETCH_WORKERS) as ex:
+         for r, text in zip(todo, ex.map(lambda x: fetch_text(x["url"]), todo)):
+             if len(text) > len(r["content"]):
+                 r["content"] = text
+ 
+ 
+-def web_search(query: str, max_results: int = 5, providers: list | None = None, fetch: bool = True) -> list[dict]:
++def web_search(query: str, max_results: int = 5, providers: list | None = None, fetch: bool = True,
++               *, session: SearchSession | None = None, bypass_cache: bool = False) -> list[dict]:
++    """缓存仅在显式 session / 当前 research() 内生效；fresh 调用可绕过。"""
++    session = session if session is not None else current_session.get()
++    selected = providers if providers is not None else get_providers()
++    # 自定义 provider 没有稳定配置契约，按实例隔离；内置 key 覆盖端点及所有搜索/抓取参数。
++    identity = tuple((p.name, type(p).__module__, type(p).__qualname__,
++                      p.base_url if isinstance(p, SearXNGProvider) else
++                      (None if type(p) in (DDGSProvider, TavilyProvider) else id(p))) for p in selected)
++    key = (query, max_results, identity, fetch, FETCH_TOP, FETCH_TIMEOUT, CONTENT_LIMIT)
++    run = lambda: _web_search(query, max_results, selected, fetch, session)
++    if session is None:
++        return run()
++    return session.search(key, run, bypass=bypass_cache)
++
++
++def _web_search(query, max_results, providers, fetch, session):
+     """依次尝试各 provider；全部失败时抛出最后一个异常，交给 researcher 的降级逻辑"""
+     last_err = None
+     for p in providers if providers is not None else get_providers():
+-        t = time.time()
++        t = time.monotonic()
++        if session is not None:
++            session.metrics["search_calls"] += 1
+         with observability.span("web_search", as_type="tool", query=query, provider=p.name, max_results=max_results):
+             try:
+                 rows = p.search(query, max_results)
+@@ -114,12 +135,13 @@ def web_search(query: str, max_results: int = 5, providers: list | None = None,
+                 last_err = e
+                 log.warning("搜索 %s 失败，切换下一个：%s", p.name, str(e)[:120])
+                 continue
++        rows = unique_sources(rows)[:max(0, max_results)]
+         if not rows:
+             log.warning("搜索 %s 无结果，切换下一个", p.name)
+             continue
+         if fetch:
+-            _enrich(rows)
+-        log.info("搜索 %s 返回 %d 条，用时 %.1fs", p.name, len(rows), time.time() - t)
++            _enrich(rows, session)
++        log.info("搜索 %s 返回 %d 条，用时 %.1fs", p.name, len(rows), time.monotonic() - t)
+         return [{"id": i + 1, "title": r["title"], "url": r["url"], "content": (r["content"] or "")[:CONTENT_LIMIT],
+                  "score": r["score"], "type": "web", "provider": p.name} for i, r in enumerate(rows)]
+     if last_err:
+diff --git a/docs/interview-notes.md b/docs/interview-notes.md
+index 75e5975..a88b420 100644
+--- a/docs/interview-notes.md
++++ b/docs/interview-notes.md
+@@ -158,4 +158,12 @@
+ - **国内网络实测**：Bing、搜狗可用；百度/DuckDuckGo 触发验证码，Google 拒绝访问（可配宿主机代理）。
+ - **实测数据**（含抓正文）：SearXNG 每次 5 条，2.1~3.6s；ddgs 每次 5 条，5.3~29.4s（波动大，所以只做备用）。
+ - **真实研究**（"什么是 RRF 倒数排名融合？"）：108.8s，Langfuse 1 条 trace / 200 个 observation，web_search 38 次（searxng 36、自动降级到 ddgs 2 次，平均 1.45s），kb_search 12 次，19 次 LLM 调用共 46427 tokens。比本地库-only 的 41.9s / 18947 tokens 多，因为网页正文进了上下文。
+-- **测试**（1 轮）：tests.test_search 8 项（mock HTTP，覆盖解析、归一化、报错→空→成功降级顺序、截断）+ test_observability 4 项全过；eval.test_rag 20/20。
+\ No newline at end of file
++- **测试**（1 轮）：tests.test_search 8 项（mock HTTP，覆盖解析、归一化、报错→空→成功降级顺序、截断）+ test_observability 4 项全过；eval.test_rag 20/20。
++
++## 15. 速度与 Token 优化（2026-11-06，本阶段待验收）
++- 代码层：全文抓取默认 top 2（此前 top 3）；单页 1500 字符和研究员检索资料区 6000 字符双预算；网页按去 fragment URL 去重、本地文档保留页码；改写查询合并前分配唯一来源 ID；不更换 RAG 架构。
++- 缓存范围是一次 research() 子问题调用，不跨分支/用户/重启；成功非空结果按 TTL=120s、容量=32 的 LRU 缓存，包含 query/provider/端点/结果数/fetch 参数的 key，提供 bypass。通常不同查询无命中，不能由缓存设计推断真实加速。
++- 仅一轮离线回归（Asia/Shanghai 2026-11-06 15:27:30～15:27:48）：22/22，退出码 0，真实研究请求 0、真实内部 LLM 调用 0。固定 8 条 mock 来源旧拼接为 12086 字符，新资料区 6000 字符；cold 搜索/抓页 1/2，同 session 热查询新增 0/0。详见 docs/evidence/speed-token-20261106/。
++- 证据边界：这是确定性代码测试及 mock 回放，不是模型质量评估或生产效果；字符数不等于 tokens。缺少真实同口径 before/after，真实耗时、token 降幅和费用均不作结论，pending 验收。历史 108.8s/46427 tokens 和 KB-only 41.9s/18947 tokens 不作公平比较。
++- 来源/source id 与 SSE/resume 仅做离线契约检查；真实中断恢复、在线搜索回退、真实 KB 检索、模型引用忠实性未测。INFO 汇总记录搜索/抓页尝试、缓存命中/未命中/绕过、上下文字符数和耗时；未取得真实 input/output/total tokens，既有 Langfuse callback 保留。
++- 可据实表述：“我在研究员检索层增加了可配置资料预算与隔离缓存，并用一轮 22 项离线用例验证预算、缓存、去重、来源编号和接口契约；真实性能与报告质量仍待验收。”不要把该结果讲成线上准确率或已证明的 token/费用降幅。
+diff --git a/docs/progress.md b/docs/progress.md
+index e7505a5..1d444f7 100644
+--- a/docs/progress.md
++++ b/docs/progress.md
+@@ -13,7 +13,17 @@
+ - 网页搜索替换：自部署 SearXNG（127.0.0.1:8080）+ ddgs 备用 + trafilatura 抓正文，Langfuse web_search span；test_search 8/8，test_rag 20/20，真实研究 108.8s
+ 
+ ## 未完成（下次从这里继续）
+-- 研究耗时 108.8s 偏长：可减少抓正文条数或给 researcher 做缓存
++- 速度与 Token 优化已实现（见下方本阶段记录），实际端到端收益与质量仍待验收
+ - Langfuse：浏览器注册账号、建项目、生成 API Key 并设用户环境变量（见 docs/langfuse.md），然后跑一次真实研究看 trace
+ - 重排把 Q1 挤出 Top5；评估集仅 15 题
+ - 后续：LightRAG/RAPTOR 对比实验、GitHub 推送
++
++
++## 2026-11-06 速度与 Token 优化（实现完成，待验收）
++- 默认全文抓取 top 3 → top 2，可配置；单页 1500 字符、最终及相关性筛选资料区 6000 字符；本地资料优先并保留页码。详见 docs/search.md。
++- 新增每次 researcher.research() 子问题内的有界 TTL/LRU 缓存、URL 去重、cache bypass；修复改写查询合并的来源 ID 冲突。缓存不跨任务/并行分支/续跑持久化，不保证实际命中率。
++- 唯一一轮测试：2026-11-06 15:27:30.125735～15:27:48.370370（Asia/Shanghai），` .venv\Scripts\python tests/run_speed_round.py`；22 通过、0 失败、0 错误，退出码 0。测试主体 0.069s，包含导入的整轮墙钟约 18.245s，不是研究延迟。
++- 全部离线 mock；真实研究请求 0，真实 LLM 调用 0。固定 8 条资料 fixture：旧资料拼接 12086 字符，新资料区 6000 字符；mock cold 搜索/抓页=1/2、hit/miss=0/1，同 session 重复查询后累计仍为 1/2、hit/miss=1/1。字符数不是 tokens；未实测 input/output/total tokens。
++- 原始证据：docs/evidence/speed-token-20261106/{test-round.log,summary.json,fixture.json,exit-code.txt}。8000 无监听，未启动后端/5173，未杀进程；无 commit/push。
++- 历史 108.8s / 46427 tokens 与 KB-only 41.9s / 18947 tokens 均非本轮受控基线。真实加速、token 降幅、质量影响均 pending，证据不足，留待验收；不声称省钱。
++- SSE/resume 仅 mock 契约检查，真实强制中断/持久化续跑、真实 provider/KB/报告质量、Langfuse 上报均未执行；未重跑 Ragas/全量检索评测。所有既有 .idea 与 eval 未提交文件保留。
+diff --git a/docs/search.md b/docs/search.md
+index 42f642b..84d8dd5 100644
+--- a/docs/search.md
++++ b/docs/search.md
+@@ -23,7 +23,7 @@ curl.exe --noproxy "*" "http://127.0.0.1:8080/search?q=langgraph&format=json"
+ 每条结果：`{id, title, url, content, score, type="web", provider}`。
+ - SearXNG 的 score 是多引擎合并分、量纲不固定：`0.5 × 归一化分 + 0.5 × 名次分`（名次分 1.0 → 0.5），落在 0~1，原有 `score>=0.3` 粗筛继续有效；
+ - ddgs 没有分数，只用名次分。
+-- SearXNG 只给摘要，所以对前 3 条用 trafilatura 抓正文（超时 6s、4 并发、截断 1500 字），抓取失败保留摘要。
++- SearXNG 只给摘要，所以默认对前 2 条用 trafilatura 抓正文（超时 6s、4 并发、截断 1500 字），抓取失败保留摘要。
+ 
+ ## 可观测性
+ 每次搜索在 Langfuse 里是一个 `web_search` 节点（tool 类型），输入里带 `provider`，降级时能看到先失败的 provider 和后成功的 provider。
+@@ -32,4 +32,28 @@ curl.exe --noproxy "*" "http://127.0.0.1:8080/search?q=langgraph&format=json"
+ ```powershell
+ .venv\Scripts\python -m unittest tests.test_search   # mock HTTP，不联网
+ .venv\Scripts\python eval\smoke_search.py            # 每个 provider 在线搜一次，不调大模型
+-```
+\ No newline at end of file
++```
++## 速度与 Token 预算（2026-11-06）
++
++以下环境变量在进程启动/模块导入时读取（缓存容量与 TTL 在每次 research 创建 session 时读取）：
++
++| 键 | 默认 | 说明 |
++|---|---|---|
++| `SEARCH_FETCH_TOP` | `2`（原为 3） | 每次成功搜索只抓前 N 个候选的全文；0 禁用，负数按 0；已有 full 的候选不抓 |
++| `SEARCH_CONTENT_LIMIT` | `1500` | 单个网页返回内容、最终研究资料每条内容的字符上限；最小 1 |
++| `RESEARCH_CONTEXT_LIMIT` | `6000` | 每次研究员最终检索上下文总字符上限，包含标题/编号/分隔符；相关性筛选资料区也限此值 |
++| `SEARCH_CACHE_SIZE` | `32` | 每个 research() 内缓存最多条目数，LRU 淘汰；0 禁用 |
++| `SEARCH_CACHE_TTL` | `120` | 成功搜索结果 TTL 秒数，使用 monotonic，自搜索完成计时；0 禁用 |
++| `SEARCH_FETCH_TIMEOUT` | `6`（未变） | 每页 HTTP 请求超时秒数；不是整次研究的 deadline |
++
++缓存仅在一次 **researcher.research() 子问题调用**内使用，不跨图的并行分支、补查或用户任务共享；退出（包括异常）清空，不持久化、不改 checkpoint schema。并发访问同一显式 SearchSession 受锁保护，独立 session 不共享锁。此保守范围不会使通常各不相同的查询自动命中，因此不能据此声称整体加速。
++
++缓存 key 覆盖原 query（不改写/归一化）、max_results、provider 顺序/类型、SearXNG 端点、fetch 开关/条数/超时、内容上限；自定义 provider 按实例隔离。不缓存异常或空结果；成功的 fallback 可缓存，provider 元数据不变。返回深拷贝，避免下游编号/裁剪污染缓存。显式调用 `web_search(..., bypass_cache=True)` 可获取新结果，同时失效该 key 的旧缓存，不写入新缓存；没有新增 HTTP 请求字段。
++
++网页 URL 去重仅去除 #fragment，保留 query；本地文档保留 fragment（页码身份）。最终资料优先保留本地证据，返回给图的 sources 与实际供给模型的资料一致，保留来源编号、URL、页码及其他元数据。重写查询的新增来源在相关性筛选前使用唯一编号，避免跨查询的 [1] 冲突。预算可能减少覆盖率，须验收报告质量。
++
++预算度量为 Python 字符数，**不是 token 上限**；限制的是检索资料区，系统提示、问题、模型输出、writer/reviewer 不受该配置限制。未新增 tokenizer 或更换 RAG 架构。SEARCH_CONTENT_LIMIT=1500 对最终本地资料也生效。
++
++在应用已有 INFO 日志打开时，每次 research 退出记录 `research_metrics`：search_calls（provider 尝试含失败）、fetch_calls（抓页尝试）、cache_hits/misses/bypass、context_chars 和整次调用 elapsed_s。未在该汇总新增 query、URL 或凭证。原 Langfuse 模型 callback 保留；本阶段无真实模型调用，未取得 input/output/total tokens，不能用字符差推算 token 或成本。
++
++唯一一轮离线回归由 `tests/run_speed_round.py` 执行，合并既有搜索测试、观测性 no-op 测试及本阶段窄回归。它禁用网络连接/真实模型/真实 Langfuse，mock Chroma 并将 SQLite 放入临时目录。不要运行包含真实 DashScope/LLM 的 eval/test_rag.py 作为本阶段补测。原始结果见 `docs/evidence/speed-token-20261106/`。

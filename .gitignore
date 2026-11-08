@@ -1,0 +1,17 @@
+# Local credentials and runtime state
+.env
+.env.*
+!.env.example
+**/.coze
+**/__pycache__/
+**/*.pyc
+.venv/
+.venv-eval/
+**/node_modules/
+**/dist/
+**/.idea/
+**/.pytest_cache/
+data/
+**/*.sqlite*
+**/*.db
+docker/searxng/settings.yml

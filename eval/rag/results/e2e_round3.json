@@ -1,0 +1,28 @@
+{
+ "tag": "round3",
+ "upload_ok": 3,
+ "upload_s": 16.3,
+ "chunks": 182,
+ "seconds": 51.1,
+ "researchers": 6,
+ "local_per_researcher": [
+  1,
+  1,
+  1,
+  1,
+  1,
+  1
+ ],
+ "review_scores": [
+  8
+ ],
+ "report_chars": 11625,
+ "local_refs": 2,
+ "mentions_120s": true,
+ "mentions_8812": true,
+ "local_links": 2,
+ "local_links_bad": 0,
+ "local_link_ok": true,
+ "kb_after_cleanup": 0,
+ "pass": true
+}

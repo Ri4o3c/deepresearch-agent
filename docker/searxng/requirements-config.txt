@@ -1,0 +1,3 @@
+# Existing local versions; no installation is performed by the startup helper.
+python-dotenv==1.2.4
+PyYAML==6.0.3

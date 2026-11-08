@@ -1,0 +1,99 @@
+{
+ "summary": {
+  "faithfulness": 1.0,
+  "answer_relevancy": 0.835,
+  "llm_context_precision_with_reference": 0.922
+ },
+ "rows": [
+  {
+   "user_input": "RAG 论文里检索器和生成器分别用的是什么模型？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.955276941724238,
+   "llm_context_precision_with_reference": 0.0
+  },
+  {
+   "user_input": "RAG-Sequence 和 RAG-Token 有什么区别？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.8691801862660434,
+   "llm_context_precision_with_reference": 0.9999999999
+  },
+  {
+   "user_input": "ReAct 在 ALFWorld 和 WebShop 上比模仿学习和强化学习方法提升了多少成功率？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.9982818293921423,
+   "llm_context_precision_with_reference": 0.8333333332916666
+  },
+  {
+   "user_input": "What does ReAct interleave when prompting a language model?",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.9514717663263872,
+   "llm_context_precision_with_reference": 0.999999999975
+  },
+  {
+   "user_input": "长上下文中相关信息放在中间位置时，模型表现呈现什么曲线？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.49804596398643536,
+   "llm_context_precision_with_reference": 0.999999999975
+  },
+  {
+   "user_input": "LangGraph 中并行节点写同一个字段，如何避免互相覆盖？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.6569729072208697,
+   "llm_context_precision_with_reference": 0.99999999995
+  },
+  {
+   "user_input": "Send API 适合什么场景？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.8978391585602269,
+   "llm_context_precision_with_reference": 0.9999999999
+  },
+  {
+   "user_input": "程序崩溃后如何让 LangGraph 从断点继续执行？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.720351891840433,
+   "llm_context_precision_with_reference": 0.99999999995
+  },
+  {
+   "user_input": "LangGraph 默认的 recursion_limit 是多少？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.44195181244402326,
+   "llm_context_precision_with_reference": 0.99999999995
+  },
+  {
+   "user_input": "BM25 的 k1 和 b 参数分别控制什么，常用取值是多少？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.9980161446697189,
+   "llm_context_precision_with_reference": 0.9999999999
+  },
+  {
+   "user_input": "RRF 融合的公式和常数 k 一般取多少？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.9846274395846453,
+   "llm_context_precision_with_reference": 0.9999999999
+  },
+  {
+   "user_input": "为什么重排模型只用于少量候选？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.7324990302167195,
+   "llm_context_precision_with_reference": 0.9999999999
+  },
+  {
+   "user_input": "北斗平台合同审查任务的超时时间是多少？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 1.0,
+   "llm_context_precision_with_reference": 0.9999999999
+  },
+  {
+   "user_input": "星河平台的值班热线和 P0 告警响应时限是什么？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.8157269775694249,
+   "llm_context_precision_with_reference": 0.9999999999
+  },
+  {
+   "user_input": "语义缓存的命中阈值和有效期是多少？",
+   "faithfulness": 1.0,
+   "answer_relevancy": 0.997575397601743,
+   "llm_context_precision_with_reference": 0.9999999999
+  }
+ ]
+}

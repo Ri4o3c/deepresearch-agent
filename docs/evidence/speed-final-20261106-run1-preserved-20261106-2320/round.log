@@ -1,0 +1,61 @@
+{
+  "started": "2026-11-06T18:07:25.198754+08:00",
+  "ended": "2026-11-06T18:07:28.247524+08:00",
+  "elapsed_s": 3.0453363000051468,
+  "passed": 0,
+  "failed": 0,
+  "exit_code": 1,
+  "failure": {
+    "type": "RuntimeError",
+    "failed_assertion": null,
+    "frames": [
+      {
+        "file": "operator.py",
+        "line": 20,
+        "function": "<module>"
+      },
+      {
+        "file": "types.py",
+        "line": 18,
+        "function": "<module>"
+      },
+      {
+        "file": "collection_configuration.py",
+        "line": 9,
+        "function": "<module>"
+      },
+      {
+        "file": "__init__.py",
+        "line": 42,
+        "function": "<module>"
+      },
+      {
+        "file": "onnx_mini_lm_l6_v2.py",
+        "line": 37,
+        "function": "<module>"
+      },
+      {
+        "file": "onnx_mini_lm_l6_v2.py",
+        "line": 39,
+        "function": "ONNXMiniLM_L6_V2"
+      },
+      {
+        "file": "pathlib.py",
+        "line": 1202,
+        "function": "home"
+      },
+      {
+        "file": "pathlib.py",
+        "line": 1406,
+        "function": "expanduser"
+      }
+    ]
+  },
+  "guards": {
+    "network": 0,
+    "external_client": 0,
+    "forbidden_file": 0
+  },
+  "fail_fast": true,
+  "rerun": false
+}

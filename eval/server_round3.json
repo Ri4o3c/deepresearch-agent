@@ -1,0 +1,97 @@
+[
+  {
+    "name": "正常流程: 以 start 开头 done 结尾",
+    "ok": true,
+    "detail": "['start']..['done']"
+  },
+  {
+    "name": "正常流程: 节点顺序 planner→researcher→writer→reviewer",
+    "ok": true,
+    "detail": "planner,researcher,researcher,researcher,researcher,researcher,researcher,writer,reviewer"
+  },
+  {
+    "name": "正常流程: 无内部事件泄露",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "正常流程: done 含报告",
+    "ok": true,
+    "detail": "10039 字, 39s"
+  },
+  {
+    "name": "正常流程: GET 显示已完成",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "空问题被拒绝(4xx)",
+    "ok": true,
+    "detail": "status=422"
+  },
+  {
+    "name": "纯空格问题被拒绝(4xx)",
+    "ok": true,
+    "detail": "status=422"
+  },
+  {
+    "name": "超长问题被拒绝(4xx)",
+    "ok": true,
+    "detail": "status=422"
+  },
+  {
+    "name": "缺少字段返回 422",
+    "ok": true,
+    "detail": "status=422"
+  },
+  {
+    "name": "查询不存在任务返回 404",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "续跑不存在任务返回 404",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "续跑已完成任务返回 400",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "并发 2 任务均完成",
+    "ok": true,
+    "detail": "40s, 结尾事件=['done', 'done']"
+  },
+  {
+    "name": "并发任务 thread_id 不同",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "客户端断开后可查询状态",
+    "ok": true,
+    "detail": "finished=False next=['researcher', 'researcher', 'researcher', 'researcher', 'researcher', 'researcher']"
+  },
+  {
+    "name": "客户端断开后可续跑完成",
+    "ok": true,
+    "detail": "done"
+  },
+  {
+    "name": "崩溃后状态保留",
+    "ok": true,
+    "detail": "notes=2 next=3"
+  },
+  {
+    "name": "崩溃续跑完成",
+    "ok": true,
+    "detail": "done"
+  },
+  {
+    "name": "崩溃续跑后笔记无重复且与子问题一一对应",
+    "ok": true,
+    "detail": "notes=5 sub_questions=5"
+  }
+]

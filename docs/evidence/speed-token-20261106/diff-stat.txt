@@ -1,0 +1,7 @@
+ .idea/runConfigurations/web_dev.xml |  7 +++--
+ app/researcher.py                   | 59 ++++++++++++++++++++++++++++++++-----
+ app/search/__init__.py              | 36 +++++++++++++++++-----
+ docs/interview-notes.md             | 10 ++++++-
+ docs/progress.md                    | 12 +++++++-
+ docs/search.md                      | 28 ++++++++++++++++--
+ 6 files changed, 131 insertions(+), 21 deletions(-)

@@ -1,0 +1,719 @@
+{
+  "started": "2026-11-06T23:31:34.482471+08:00",
+  "ended": "2026-11-06T23:31:37.202540+08:00",
+  "elapsed_s": 2.7229839000065112,
+  "comparison_type": "current_implementation_configuration_comparison",
+  "passed": 99,
+  "failed": 0,
+  "exit_code": 0,
+  "failure": null,
+  "checks": [
+    {
+      "type": "config_6000_fetch2:cold:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:cold:budget",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:cold:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:cold:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:cold:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:cold:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:warm:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:warm:budget",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:warm:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:warm:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:warm:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:warm:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:bypass:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:bypass:budget",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:bypass:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:bypass:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:bypass:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:bypass:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:after_bypass:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:after_bypass:budget",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:after_bypass:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:after_bypass:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:after_bypass:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:after_bypass:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:independent_session:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:independent_session:budget",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:independent_session:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:independent_session:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:independent_session:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:independent_session:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_6000_fetch2:stable_context",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:cold:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:cold:budget",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:cold:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:cold:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:cold:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:cold:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:warm:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:warm:budget",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:warm:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:warm:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:warm:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:warm:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:bypass:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:bypass:budget",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:bypass:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:bypass:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:bypass:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:bypass:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:after_bypass:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:after_bypass:budget",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:after_bypass:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:after_bypass:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:after_bypass:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:after_bypass:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:independent_session:url_dedupe",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:independent_session:budget",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:independent_session:local_fragments_preserved",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:independent_session:request_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:independent_session:fetch_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:independent_session:cache_delta",
+      "ok": true
+    },
+    {
+      "type": "config_1800_fetch1:stable_context",
+      "ok": true
+    },
+    {
+      "type": "configuration_context_difference",
+      "ok": true
+    },
+    {
+      "type": "configuration_budget_drops_source",
+      "ok": true
+    },
+    {
+      "type": "checkpoint_writer_pending",
+      "ok": true
+    },
+    {
+      "type": "checkpoint_two_research_notes",
+      "ok": true
+    },
+    {
+      "type": "research_real_budget_applied",
+      "ok": true
+    },
+    {
+      "type": "note_budget_removed_web:纯合成子问题甲",
+      "ok": true
+    },
+    {
+      "type": "note_local_page_identity:纯合成子问题甲",
+      "ok": true
+    },
+    {
+      "type": "note_original_ids_retained:纯合成子问题甲",
+      "ok": true
+    },
+    {
+      "type": "note_findings_source_ids_valid:纯合成子问题甲",
+      "ok": true
+    },
+    {
+      "type": "note_budget_removed_web:纯合成子问题乙",
+      "ok": true
+    },
+    {
+      "type": "note_local_page_identity:纯合成子问题乙",
+      "ok": true
+    },
+    {
+      "type": "note_original_ids_retained:纯合成子问题乙",
+      "ok": true
+    },
+    {
+      "type": "note_findings_source_ids_valid:纯合成子问题乙",
+      "ok": true
+    },
+    {
+      "type": "researcher_event_summary_contract",
+      "ok": true
+    },
+    {
+      "type": "resume_route_returns_sse",
+      "ok": true
+    },
+    {
+      "type": "writer_boundary_called_with_real_notes",
+      "ok": true
+    },
+    {
+      "type": "writer_real_global_ids",
+      "ok": true
+    },
+    {
+      "type": "writer_real_local_page_urls",
+      "ok": true
+    },
+    {
+      "type": "writer_dropped_web_absent",
+      "ok": true
+    },
+    {
+      "type": "writer_findings_remapped",
+      "ok": true
+    },
+    {
+      "type": "resume_real_event_order",
+      "ok": true
+    },
+    {
+      "type": "resume_only_writer_reviewer",
+      "ok": true
+    },
+    {
+      "type": "resume_no_search_fetch_repeat",
+      "ok": true
+    },
+    {
+      "type": "resume_no_completed_model_repeat",
+      "ok": true
+    },
+    {
+      "type": "writer_done_reports_match",
+      "ok": true
+    },
+    {
+      "type": "stream_resolvable_citations:0",
+      "ok": true
+    },
+    {
+      "type": "stream_preserves_page_links:0",
+      "ok": true
+    },
+    {
+      "type": "stream_resolvable_citations:1",
+      "ok": true
+    },
+    {
+      "type": "stream_preserves_page_links:1",
+      "ok": true
+    },
+    {
+      "type": "real_sse_encoding:0",
+      "ok": true
+    },
+    {
+      "type": "real_sse_encoding:1",
+      "ok": true
+    },
+    {
+      "type": "real_sse_encoding:2",
+      "ok": true
+    },
+    {
+      "type": "real_sse_encoding:3",
+      "ok": true
+    },
+    {
+      "type": "resume_completed_state",
+      "ok": true
+    },
+    {
+      "type": "mock_model_call_counts",
+      "ok": true
+    },
+    {
+      "type": "all_forbidden_boundaries_unused",
+      "ok": true
+    },
+    {
+      "type": "temporary_checkpoint_not_disk_database",
+      "ok": true
+    }
+  ],
+  "per_call_comparison": [
+    {
+      "phase": "config_6000_fetch2",
+      "call": "cold",
+      "context_limit": 6000,
+      "fetch_top": 2,
+      "search_calls_delta": 1,
+      "fetch_calls_delta": 2,
+      "cache_hits_delta": 0,
+      "cache_misses_delta": 1,
+      "cache_bypass_delta": 0,
+      "input_sources": 6,
+      "kept_sources": 4,
+      "kept_ids": [
+        5,
+        6,
+        1,
+        2
+      ],
+      "context_chars": 6000,
+      "tokens": null,
+      "elapsed_s": 0.0005832000024383888
+    },
+    {
+      "phase": "config_6000_fetch2",
+      "call": "warm",
+      "context_limit": 6000,
+      "fetch_top": 2,
+      "search_calls_delta": 0,
+      "fetch_calls_delta": 0,
+      "cache_hits_delta": 1,
+      "cache_misses_delta": 0,
+      "cache_bypass_delta": 0,
+      "input_sources": 6,
+      "kept_sources": 4,
+      "kept_ids": [
+        5,
+        6,
+        1,
+        2
+      ],
+      "context_chars": 6000,
+      "tokens": null,
+      "elapsed_s": 6.019999273121357e-05
+    },
+    {
+      "phase": "config_6000_fetch2",
+      "call": "bypass",
+      "context_limit": 6000,
+      "fetch_top": 2,
+      "search_calls_delta": 1,
+      "fetch_calls_delta": 2,
+      "cache_hits_delta": 0,
+      "cache_misses_delta": 0,
+      "cache_bypass_delta": 1,
+      "input_sources": 6,
+      "kept_sources": 4,
+      "kept_ids": [
+        5,
+        6,
+        1,
+        2
+      ],
+      "context_chars": 6000,
+      "tokens": null,
+      "elapsed_s": 0.00030590000096708536
+    },
+    {
+      "phase": "config_6000_fetch2",
+      "call": "after_bypass",
+      "context_limit": 6000,
+      "fetch_top": 2,
+      "search_calls_delta": 1,
+      "fetch_calls_delta": 2,
+      "cache_hits_delta": 0,
+      "cache_misses_delta": 1,
+      "cache_bypass_delta": 0,
+      "input_sources": 6,
+      "kept_sources": 4,
+      "kept_ids": [
+        5,
+        6,
+        1,
+        2
+      ],
+      "context_chars": 6000,
+      "tokens": null,
+      "elapsed_s": 0.00028619999648071826
+    },
+    {
+      "phase": "config_6000_fetch2",
+      "call": "independent_session",
+      "context_limit": 6000,
+      "fetch_top": 2,
+      "search_calls_delta": 1,
+      "fetch_calls_delta": 2,
+      "cache_hits_delta": 0,
+      "cache_misses_delta": 1,
+      "cache_bypass_delta": 0,
+      "input_sources": 6,
+      "kept_sources": 4,
+      "kept_ids": [
+        5,
+        6,
+        1,
+        2
+      ],
+      "context_chars": 6000,
+      "tokens": null,
+      "elapsed_s": 0.00026780000189319253
+    },
+    {
+      "phase": "config_1800_fetch1",
+      "call": "cold",
+      "context_limit": 1800,
+      "fetch_top": 1,
+      "search_calls_delta": 1,
+      "fetch_calls_delta": 1,
+      "cache_hits_delta": 0,
+      "cache_misses_delta": 1,
+      "cache_bypass_delta": 0,
+      "input_sources": 6,
+      "kept_sources": 2,
+      "kept_ids": [
+        5,
+        6
+      ],
+      "context_chars": 1800,
+      "tokens": null,
+      "elapsed_s": 0.0002499999973224476
+    },
+    {
+      "phase": "config_1800_fetch1",
+      "call": "warm",
+      "context_limit": 1800,
+      "fetch_top": 1,
+      "search_calls_delta": 0,
+      "fetch_calls_delta": 0,
+      "cache_hits_delta": 1,
+      "cache_misses_delta": 0,
+      "cache_bypass_delta": 0,
+      "input_sources": 6,
+      "kept_sources": 2,
+      "kept_ids": [
+        5,
+        6
+      ],
+      "context_chars": 1800,
+      "tokens": null,
+      "elapsed_s": 4.719999560620636e-05
+    },
+    {
+      "phase": "config_1800_fetch1",
+      "call": "bypass",
+      "context_limit": 1800,
+      "fetch_top": 1,
+      "search_calls_delta": 1,
+      "fetch_calls_delta": 1,
+      "cache_hits_delta": 0,
+      "cache_misses_delta": 0,
+      "cache_bypass_delta": 1,
+      "input_sources": 6,
+      "kept_sources": 2,
+      "kept_ids": [
+        5,
+        6
+      ],
+      "context_chars": 1800,
+      "tokens": null,
+      "elapsed_s": 0.0003451000084169209
+    },
+    {
+      "phase": "config_1800_fetch1",
+      "call": "after_bypass",
+      "context_limit": 1800,
+      "fetch_top": 1,
+      "search_calls_delta": 1,
+      "fetch_calls_delta": 1,
+      "cache_hits_delta": 0,
+      "cache_misses_delta": 1,
+      "cache_bypass_delta": 0,
+      "input_sources": 6,
+      "kept_sources": 2,
+      "kept_ids": [
+        5,
+        6
+      ],
+      "context_chars": 1800,
+      "tokens": null,
+      "elapsed_s": 0.00028469999961089343
+    },
+    {
+      "phase": "config_1800_fetch1",
+      "call": "independent_session",
+      "context_limit": 1800,
+      "fetch_top": 1,
+      "search_calls_delta": 1,
+      "fetch_calls_delta": 1,
+      "cache_hits_delta": 0,
+      "cache_misses_delta": 1,
+      "cache_bypass_delta": 0,
+      "input_sources": 6,
+      "kept_sources": 2,
+      "kept_ids": [
+        5,
+        6
+      ],
+      "context_chars": 1800,
+      "tokens": null,
+      "elapsed_s": 0.0003159000043524429
+    }
+  ],
+  "chain": {
+    "research_input_sources_per_note": 6,
+    "kept_sources_per_note": 2,
+    "local_ids_before_writer": [
+      5,
+      6
+    ],
+    "writer_global_ids": [
+      1,
+      2
+    ],
+    "context_measurements": [
+      {
+        "question": "纯合成子问题甲",
+        "ids": [
+          5,
+          6
+        ],
+        "chars": 1800,
+        "search_metrics": {
+          "search_calls": 1,
+          "fetch_calls": 1,
+          "cache_hits": 0,
+          "cache_misses": 1,
+          "cache_bypass": 0,
+          "context_chars": 1800
+        }
+      },
+      {
+        "question": "纯合成子问题乙",
+        "ids": [
+          5,
+          6
+        ],
+        "chars": 1800,
+        "search_metrics": {
+          "search_calls": 1,
+          "fetch_calls": 1,
+          "cache_hits": 0,
+          "cache_misses": 1,
+          "cache_bypass": 0,
+          "context_chars": 1800
+        }
+      }
+    ],
+    "initial_search_calls": 2,
+    "initial_fetch_calls": 2,
+    "resume_search_calls_delta": 0,
+    "resume_fetch_calls_delta": 0,
+    "model_calls_before_resume": {
+      "ResearchPlan": 1,
+      "Relevance": 2,
+      "ResearchNote": 2
+    },
+    "model_calls_resume_delta": {
+      "ResearchPlan": 0,
+      "Relevance": 0,
+      "ResearchNote": 0,
+      "writer": 1,
+      "Review": 1
+    },
+    "events": [
+      "start",
+      "node",
+      "node",
+      "done"
+    ],
+    "nodes": [
+      "writer",
+      "reviewer"
+    ],
+    "tokens": null,
+    "checkpoint": "real SqliteSaver, isolated in-memory SQLite",
+    "asgi_transport_consumed": false,
+    "process_crash_tested": false
+  },
+  "mock_llm_calls": {
+    "ResearchPlan": 1,
+    "Relevance": 2,
+    "ResearchNote": 2,
+    "writer": 1,
+    "Review": 1
+  },
+  "guards": {
+    "network": 0,
+    "external_client": 0,
+    "forbidden_file": 0
+  },
+  "tokens": null,
+  "real_llm_calls": 0,
+  "real_research_requests": 0,
+  "not_covered": [
+    "live model quality",
+    "real search/embedding/rerank",
+    "HTTP/ASGI transport",
+    "process crash/restart persistence",
+    "reflection follow-up round",
+    "production latency/tokens"
+  ]
+}

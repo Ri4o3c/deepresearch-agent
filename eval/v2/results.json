@@ -1,0 +1,87 @@
+[
+  {
+    "tag": "技术对比",
+    "question": "LangGraph、CrewAI、AutoGen 三个多智能体框架怎么选？",
+    "seconds": 49.0,
+    "rounds": 1,
+    "scores": [
+      7
+    ],
+    "passed": true,
+    "issues": [
+      "报告自承在状态管理、HITL、可观测性三个核心维度上缺乏横向对比（[18] 正文缺失、AutoGen 状态管理无描述），而这三个维度正是原问题明确要求回答的内容，覆盖度存在实质缺口。",
+      "AutoGen 进入维护模式的时间存在 2025 年 10 月与 2026 年 4 月两种口径，报告以推测方式（'更可能是 MAF 1.0 GA 被混记'）自行裁定，缺乏直接证据支撑，属于关键事实的未决分歧。",
+      "多处关键量化数据（107 任务基准 97/107、失败率 12%→4%、256 节点 P99 270ms vs 1.1s、CrewAI 4.2/5 评分、微软亚洲研究院黑客松 3.2h vs 9.5h、arXiv 38% 引用率）均引自同一批中文二手来源 [30][31][34]，缺乏独立交叉验证，可信度存疑。",
+      "CrewAI 的 GitHub 星标数（50.8k vs 57,217）与'四大框架中社区热度最高'的定性结论之间存在张力——若 AutoGen 星标最多（2.4 节所述），则 CrewAI 并非最高，前后表述不一致。",
+      "结论部分虽给出场景矩阵与节点数分界线，但'节点数 <20 / >50'的经验阈值来源单一且缺乏适用条件说明，作为可操作建议的稳健性不足。"
+    ],
+    "researchers": 6,
+    "kept_sources_per_researcher": [
+      8,
+      5,
+      5,
+      6,
+      5,
+      11
+    ],
+    "report_chars": 11601,
+    "tokens": {
+      "deepseek-flash": {
+        "in": 46107,
+        "out": 10605
+      }
+    },
+    "citations": 199,
+    "refs": 30,
+    "invalid_citation_ids": [],
+    "unused_refs": 0,
+    "timeline": [
+      [
+        "planner",
+        3.5
+      ],
+      [
+        "researcher",
+        11.1
+      ],
+      [
+        "researcher",
+        11.4
+      ],
+      [
+        "researcher",
+        12.3
+      ],
+      [
+        "researcher",
+        13.3
+      ],
+      [
+        "researcher",
+        13.8
+      ],
+      [
+        "researcher",
+        20.5
+      ],
+      [
+        "writer",
+        45.7
+      ],
+      [
+        "reviewer",
+        49.0
+      ]
+    ]
+  },
+  {
+    "tag": "行业趋势",
+    "question": "2026年中国新能源汽车出海的主要市场、挑战和趋势是什么？",
+    "error": "OpenAIRateLimitError('Error code: 429 - Too many requests. Your current concurrency is 5, which exceeds your concurrency limit of 5 based on your remaining balance. Please top up your balance to restore your concurrency. (request_id: a50b1973-6e51-4179-8a83-ac0d9881d2c7)')"
+  },
+  {
+    "tag": "概念解释",
+    "question": "什么是 MCP（Model Context Protocol）协议，它解决了什么问题，生态现状如何？",
+    "error": "OpenAIRateLimitError('Error code: 429 - Too many requests. Your current concurrency is 5, which exceeds your concurrency limit of 5 based on your remaining balance. Please top up your balance to restore your concurrency. (request_id: d42b8ed4-1156-4a36-a8c7-7e35f3517217)')"
+  }
+]

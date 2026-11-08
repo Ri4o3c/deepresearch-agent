@@ -1,0 +1,12 @@
+{
+  "started": "2026-11-06T15:27:30.125735+08:00",
+  "ended": "2026-11-06T15:27:48.370370+08:00",
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "successful": true,
+  "real_research_requests": 0,
+  "real_llm_calls": 0,
+  "mode": "offline_mock"
+}

@@ -1,0 +1,167 @@
+[
+ {
+  "user_input": "RAG 论文里检索器和生成器分别用的是什么模型？",
+  "response": "根据资料，RAG 的检索器是预训练的神经检索器（pre-trained neural retriever），生成器是预训练的 seq2seq 模型（pre-trained seq2seq model）。资料未说明具体模型名称。",
+  "retrieved_contexts": [
+   "uence Model The RAG-Sequence model uses the same retrieved document to generate\nthe complete sequence. Technically, it treats the retrieved document as a single latent variable that\nis marginalized to get the seq2seq probability p(y|x) via a top-K approximation. Concretely, the\ntop K documents are retrieved using the retriever, and the generator produces the output sequence\nprobability for each document, which are then marginalized,\npRAG-Sequence(y|x) ≈\n∑\nz∈top-k(p(·|x))\npη(z|x)pθ(y|x,z ) =\n∑",
+   "en producing an answer. Concretely, the top K documents are retrieved using the\nretriever, and then the generator produces a distribution for the next output token for each document,\nbefore marginalizing, and repeating the process with the following output token, Formally, we deﬁne:\npRAG-Token(y|x) ≈\nN∏\ni\n∑\nz∈top-k(p(·|x))\npη(z|x)pθ(yi|x,z,y 1:i−1)\nFinally, we note that RAG can be used for sequence classiﬁcation tasks by considering the target class",
+   "explore a general-purpose ﬁne-tuning recipe for retrieval-augmented generation\n(RAG) — models which combine pre-trained parametric and non-parametric memory for language generation. We introduce RAG models where the parametric\nmemory is a pre-trained seq2seq model and the non-parametric memory is a dense\nvector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages",
+   "ext passages given a queryx and (ii) a generatorpθ(yi|x,z,y 1:i−1) parametrized\n1Code to run experiments with RAG has been open-sourced as part of the HuggingFace Transformers Library [66] and can be found at https://github.com/huggingface/transformers/blob/master/\nexamples/rag/. An interactive demo of RAG models can be found at https://huggingface.co/rag/\n2"
+  ],
+  "reference": "检索器是 DPR（Dense Passage Retriever），生成器是 BART 序列到序列模型。"
+ },
+ {
+  "user_input": "RAG-Sequence 和 RAG-Token 有什么区别？",
+  "response": "RAG-Sequence 使用同一文档预测每个目标 token；RAG-Token 可以基于不同文档预测每个目标 token。测试时两者近似 arg maxyp(y|x) 的方式不同：RAG-Token 可视为标准自回归 seq2seq 生成器，其转移概率可代入标准 beam decoder 解码。",
+  "retrieved_contexts": [
+   "generated text. In one approach, RAG-Sequence, the model uses the same document\nto predict each target token. The second approach, RAG-Token, can predict each target token based\non a different document. In the following, we formally introduce both models and then describe the\npη andpθ components, as well as the training and decoding procedure.\n2.1 Models\nRAG-Sequence Model The RAG-Sequence model uses the same retrieved document to generate",
+   "d, only ﬁne-tuning the query encoder BERTq and the BART generator.\n2.5 Decoding\nAt test time, RAG-Sequence and RAG-Token require different ways to approximatearg maxyp(y|x).\nRAG-Token The RAG-Token model can be seen as a standard, autoregressive seq2seq generator with transition probability: p′θ(yi|x,y 1:i−1) = ∑z∈top-k(p(·|x))pη(zi|x)pθ(yi|x,zi,y 1:i−1) To\ndecode, we can plugp′θ(yi|x,y 1:i−1) into a standard beam decoder.",
+   "at RAG-Token performs better than RAG-Sequence on Jeopardy question generation,\nwith both models outperforming BART on Q-BLEU-1. 4 shows human evaluation results, over 452\npairs of generations from BART and RAG-Token. Evaluators indicated that BART was more factual\nthan RAG in only 7.1% of cases, while RAG was more factual in 42.7% of cases, and both RAG and\nBART were factual in a further 17% of cases, clearly demonstrating the effectiveness of RAG on",
+   "gure 3 (right) shows that retrieving more documents leads to higher Rouge-L for\nRAG-Token at the expense of Bleu-1, but the effect is less pronounced for RAG-Sequence.\n10 20 30 40 50\nKR e t r i e v e dD o c s\n39\n40\n41\n42\n43\n44NQ Exact Match RAG-Tok\nRAG-Seq\n10 20 30 40 50\nKR e t r i e v e dD o c s\n40\n50\n60\n70\n80NQ Answer Recall @ K\nRAG-Tok\nRAG-Seq\nFixed DPR\nBM25\n10 20 30 40 50\nKR e t r i e v e dD o c s\n48\n50\n52\n54\n56Bleu-1 / Rouge-L score\nRAG-Tok R-L\nRAG-Tok B-1\nRAG-Seq R-L\nRAG-Seq B-1"
+  ],
+  "reference": "RAG-Sequence 整个输出序列使用同一篇检索文档；RAG-Token 每个 token 可以依据不同的文档生成。"
+ },
+ {
+  "user_input": "ReAct 在 ALFWorld 和 WebShop 上比模仿学习和强化学习方法提升了多少成功率？",
+  "response": "ReAct 在 ALFWorld 和 WebShop 上比模仿学习和强化学习方法分别提升了 34% 和 10% 的成功率。",
+  "retrieved_contexts": [
+   "easoning. On ALFWorld and WebShop, two or even one-shot ReAct prompting is able\nto outperform imitation or reinforcement learning methods trained with 103∼ 105 task instances,\nwith an absolute improvement of 34% and 10% in success rates respectively. We also demonstrate\nthe importance of sparse, versatile reasoning in decision making by showing consistent advantages\nover controlled baselines with actions only. Besides general applicability and performance boost,",
+   "arning (IL + RL)\nmethod additionally trained with 10,587 training instructions.\nResults ReAct outperforms Act on both ALFWorld (Table 3) and Webshop (Table 4). On\nALFWorld, the bestReAct trial achieves an average success rate of 71%, signiﬁcantly outperforming\nthe best Act (45%) and BUTLER (37%) trials. In fact, even the worse ReAct trial (48%) beats\nthe best trial of both methods. Moreover, the advantage of ReAct over Act is consistent across",
+   "ajectories that are more interpretable than baselines without reasoning traces.\nFurthermore, on two interactive decision making benchmarks (ALFWorld and\nWebShop), ReAct outperforms imitation and reinforcement learning methods by\nan absolute success rate of 34% and 10% respectively, while being prompted with\nonly one or two in-context examples.\n1 I NTRODUCTION\nA unique feature of human intelligence is the ability to seamlessly combine task-oriented actions with",
+   "HotPotQA and Fever, with access to a Wikipedia API that the model can interact\nwith, ReAct outperforms vanilla action generation models while being competitive with chain-ofthought reasoning (CoT) (Wei et al., 2022). The best approach overall is a combination of ReAct\nand CoT that allows for the use of both internal knowledge and externally obtained information\nduring reasoning. On ALFWorld and WebShop, two or even one-shot ReAct prompting is able"
+  ],
+  "reference": "绝对成功率分别提升 34% 和 10%。"
+ },
+ {
+  "user_input": "What does ReAct interleave when prompting a language model?",
+  "response": "ReAct interleaves verbal reasoning traces and actions pertaining to a task when prompting a language model.",
+  "retrieved_contexts": [
+   "combination can bring systematic beneﬁts compared to reasoning or acting alone.\nIn this work, we present ReAct, a general paradigm to combine reasoning and acting with language\nmodels for solving diverse language reasoning and decision making tasks (Figure 1). ReAct\nprompts LLMs to generate both verbal reasoning traces and actions pertaining to a task in an\ninterleaved manner, which allows the model to perform dynamic reasoning to create, maintain, and",
+   "an interleaved manner, allowing for greater synergy between the two: reasoning\ntraces help the model induce, track, and update action plans as well as handle\nexceptions, while actions allow it to interface with and gather additional information\nfrom external sources such as knowledge bases or environments. We apply our\napproach, named ReAct, to a diverse set of language and decision making tasks\nand demonstrate its effectiveness over state-of-the-art baselines in addition to",
+   "Published as a conference paper at ICLR 2023\nappear sparsely in the most relevant positions of a trajectory, so we let the language model decide the\nasynchronous occurrence of thoughts and actions for itself.\nSince decision making and reasoning capabilities are integrated into a large language model, ReAct\nenjoys several unique features: A) Intuitive and easy to design : Designing ReAct prompts is",
+   "as inspect reasoning traces to understand\nthe decision basis of model actions.\nTo summarize, our key contributions are the following: (1) we introduce ReAct, a novel promptbased paradigm to synergize reasoning and acting in language models for general task solving; (2) we\nperform extensive experiments across diverse benchmarks to showcase the advantage of ReAct in a\nfew-shot learning setup over prior approaches that perform either reasoning or action generation in"
+  ],
+  "reference": "ReAct interleaves reasoning traces and task-specific actions."
+ },
+ {
+  "user_input": "长上下文中相关信息放在中间位置时，模型表现呈现什么曲线？",
+  "response": "U型性能曲线。",
+  "retrieved_contexts": [
+   "n of the relevant information\nwithin the input context by changing the order of\nthe documents to place the relevant document at\nthe beginning, middle or end of the context.\nWe find that changing the position of relevant\ninformation in the input context can substantially\naffect model performance, indicating that current\nlanguage models do not robustly access and use\ninformation in long input contexts. Furthermore,\nwe observe a distinctive U-shaped performance",
+   "relevant information\n(in this case, the position of the passage that answers an\ninput question) within the language model’s input context results in a U-shaped performance curve—models\nare better at using relevant information that occurs at the\nvery beginning (primacy bias) or end of its input context\n(recency bias), and performance degrades significantly\nwhen models must access and use information located\nin the middle of its input context.\nrelevant documents from a search engine, database",
+   "ustly make use of information in\nlong input contexts. In particular, we observe\nthat performance is often highest when relevant information occurs at the beginning or\nend of the input context, and significantly\ndegrades when models must access relevant\ninformation in the middle of long contexts,\neven for explicitly long-context models. Our\nanalysis provides a better understanding of\nhow language models use their input context\nand provides new evaluation protocols for",
+   "levant information within their input context (left subplot). In contrast, when\nthese models are evaluated on sequences longer than those seen during training (center and right subplots), we\nobserve a U-shaped performance curve—performance is higher when relevant information occurs at the beginning\nor end of the input context, as opposed to the middle of the input context.\n1st 5th 10th 15th 20th\nPosition of Document with the Answer\n50\n60\n70\n80Accuracy\n20 T otal Retrieved Documents"
+  ],
+  "reference": "呈 U 型曲线：信息在开头或结尾时表现最好，在中间时明显下降。"
+ },
+ {
+  "user_input": "LangGraph 中并行节点写同一个字段，如何避免互相覆盖？",
+  "response": "使用 reducer 合并并行结果，例如写成 `Annotated[list, operator.add]`，把各并行分支返回的列表拼接起来，而不是互相覆盖。如果没有 reducer，并行写同一个键会抛出 `InvalidUpdateError`。",
+  "retrieved_contexts": [
+   "# LangGraph 核心概念学习笔记\n\n## 1. StateGraph 与状态\nLangGraph 用 StateGraph 描述一个有状态的工作流。状态通常用 TypedDict 定义，每个节点（node）是一个普通的 Python 函数，接收当前状态，返回需要更新的字段。节点之间用边（edge）连接，START 和 END 是两个特殊节点。\n\n## 2. Reducer：并行结果如何合并\n当多个节点同时写同一个字段时，需要 reducer 决定如何合并。最常见的写法是 Annotated[list, operator.add]，表示把各个并行分支返回的列表拼接起来，而不是互相覆盖。如果没有 reducer，并行写同一个键会抛出 InvalidUpdateError。",
+   "or.add]，表示把各个并行分支返回的列表拼接起来，而不是互相覆盖。如果没有 reducer，并行写同一个键会抛出 InvalidUpdateError。\n\n## 3. Send API：动态扇出\nSend API 用于 map-reduce 场景：在条件边里返回一组 Send(\"节点名\", 子状态) 对象，LangGraph 会为每个 Send 启动一个并行的节点实例。子任务数量在运行时才确定，这正是\"一个子问题派一个检索 Agent\"的实现方式。并发度可以用 max_concurrency 配置项限制。\n\n## 4. 条件边与循环\nadd_conditional_edges 接收一个路由函数，根据状态返回下一个节点名或 END。把边指回前面的节点就形成循环，例如\"审稿不通过 → 回到检索\"的反思回路。为防止死循环，应在状态里记录轮次，并设置最大轮数；LangGraph 自身也有 recursion_limit，默认值为 25 步。",
+   "星河智能 Agent 平台运维手册（内部虚构示例文档，仅用于知识库测试）\n\n第一章 平台概况\n星河智能 Agent 平台于 2025 年 3 月上线，代号\"北斗\"，负责公司内部的客服问答、合同审查和周报生成三类业务。平台由网关层、编排层（基于 LangGraph）、工具层和模型层组成。模型层主力模型为 DeepSeek-V3，备用模型为通义千问 Qwen-Max，当主模型连续 3 次超时时自动切换到备用模型。\n\n第二章 关键配置\n单次 Agent 任务的默认超时时间为 45 秒，合同审查任务例外，超时时间放宽到 120 秒。并行工具调用的并发上限为 8。向量库使用 Chroma，每晚 2 点做一次全量备份，备份保留 14 天。知识库切块大小为 600 字，重叠 100 字。\n\n第三章 告警与值班\nP0 告警（平台整体不可用）需要在 5 分钟内响应，P1 告警（单个业务不可用）需要在 30 分钟内响应。值班表每周一上午 10 点轮换，值班热线为内线 8812。连续两次 P0 故障需要在 48 小时内提交复盘报告。",
+   "回到检索\"的反思回路。为防止死循环，应在状态里记录轮次，并设置最大轮数；LangGraph 自身也有 recursion_limit，默认值为 25 步。\n\n## 5. Checkpointer 与断点续跑\n编译图时传入 checkpointer（如 MemorySaver、SqliteSaver、PostgresSaver），每执行完一个 super-step 就把状态快照保存下来。调用时通过 config 里的 thread_id 区分会话。程序崩溃后，用同一个 thread_id 再次调用 graph.stream(None, config)，就会从最近的检查点继续执行，已经完成的节点不会重跑。\n\n## 6. Human-in-the-loop\n在节点里调用 interrupt() 可以暂停图的执行并把数据抛给调用方，人工确认后用 Command(resume=值) 恢复。这个能力依赖 checkpointer，没有 checkpointer 时无法使用 interrupt。"
+  ],
+  "reference": "用 reducer，例如 Annotated[list, operator.add] 把并行结果拼接。"
+ },
+ {
+  "user_input": "Send API 适合什么场景？",
+  "response": "Send API 适合 map-reduce 场景：在条件边里返回一组 Send(\"节点名\", 子状态) 对象，LangGraph 会为每个 Send 启动一个并行的节点实例，子任务数量在运行时才确定，例如“一个子问题派一个检索 Agent”。并发度可以用 max_concurrency 配置项限制。",
+  "retrieved_contexts": [
+   "or.add]，表示把各个并行分支返回的列表拼接起来，而不是互相覆盖。如果没有 reducer，并行写同一个键会抛出 InvalidUpdateError。\n\n## 3. Send API：动态扇出\nSend API 用于 map-reduce 场景：在条件边里返回一组 Send(\"节点名\", 子状态) 对象，LangGraph 会为每个 Send 启动一个并行的节点实例。子任务数量在运行时才确定，这正是\"一个子问题派一个检索 Agent\"的实现方式。并发度可以用 max_concurrency 配置项限制。\n\n## 4. 条件边与循环\nadd_conditional_edges 接收一个路由函数，根据状态返回下一个节点名或 END。把边指回前面的节点就形成循环，例如\"审稿不通过 → 回到检索\"的反思回路。为防止死循环，应在状态里记录轮次，并设置最大轮数；LangGraph 自身也有 recursion_limit，默认值为 25 步。",
+   "ing. In conversation modeling, chatbots like BlenderBot (Shuster et al., 2022b)\nand Sparrow (Glaese et al., 2022) and task-oriented dialogue systems like SimpleTOD (Hosseini-Asl\net al., 2020) also train LMs to make decision about API calls. Unlike ReAct, they do not explicitly\nconsider the reasoning procedure either, and also relies on expensive datasets and human feedback\ncollections for policy learning. In contrast, ReAct learns a policy in a much cheaper way, since the",
+   "ve knowledge via interacting with\nan external environment to support reasoning.\nAction Space We design a simple Wikipedia web API with three types of actions to support\ninteractive information retrieval: (1) search[entity], which returns the ﬁrst 5 sentences from\nthe corresponding entity wiki page if it exists, or else suggests top-5 similar entities from the\nWikipedia search engine, (2) lookup[string], which would return the next sentence in the page",
+   "ion protocols for future longcontext models; to claim that a language model can\nrobustly use information within long input contexts, it is necessary to show that its performance\nis minimally affected by the position of the relevant information in the input context (e.g., minimal\ndifference in best- and worst-case performance).\nTo facilitate further work on understanding and\nimproving how language models use their input\ncontext, we release our code and evaluation data.1"
+  ],
+  "reference": "适合 map-reduce 式的动态扇出，运行时为每个子任务启动并行节点实例。"
+ },
+ {
+  "user_input": "程序崩溃后如何让 LangGraph 从断点继续执行？",
+  "response": "用同一个 thread_id 再次调用 graph.stream(None, config)，就会从最近的检查点继续执行，已经完成的节点不会重跑。",
+  "retrieved_contexts": [
+   "回到检索\"的反思回路。为防止死循环，应在状态里记录轮次，并设置最大轮数；LangGraph 自身也有 recursion_limit，默认值为 25 步。\n\n## 5. Checkpointer 与断点续跑\n编译图时传入 checkpointer（如 MemorySaver、SqliteSaver、PostgresSaver），每执行完一个 super-step 就把状态快照保存下来。调用时通过 config 里的 thread_id 区分会话。程序崩溃后，用同一个 thread_id 再次调用 graph.stream(None, config)，就会从最近的检查点继续执行，已经完成的节点不会重跑。\n\n## 6. Human-in-the-loop\n在节点里调用 interrupt() 可以暂停图的执行并把数据抛给调用方，人工确认后用 Command(resume=值) 恢复。这个能力依赖 checkpointer，没有 checkpointer 时无法使用 interrupt。",
+   "确认后用 Command(resume=值) 恢复。这个能力依赖 checkpointer，没有 checkpointer 时无法使用 interrupt。\n\n## 7. 流式输出\ngraph.stream 支持多种 stream_mode：values 每步输出完整状态；updates 只输出每个节点的增量更新；messages 逐 token 输出大模型消息；custom 用于节点内自定义事件。前端做进度展示时通常用 updates 模式。",
+   "星河智能 Agent 平台运维手册（内部虚构示例文档，仅用于知识库测试）\n\n第一章 平台概况\n星河智能 Agent 平台于 2025 年 3 月上线，代号\"北斗\"，负责公司内部的客服问答、合同审查和周报生成三类业务。平台由网关层、编排层（基于 LangGraph）、工具层和模型层组成。模型层主力模型为 DeepSeek-V3，备用模型为通义千问 Qwen-Max，当主模型连续 3 次超时时自动切换到备用模型。\n\n第二章 关键配置\n单次 Agent 任务的默认超时时间为 45 秒，合同审查任务例外，超时时间放宽到 120 秒。并行工具调用的并发上限为 8。向量库使用 Chroma，每晚 2 点做一次全量备份，备份保留 14 天。知识库切块大小为 600 字，重叠 100 字。\n\n第三章 告警与值班\nP0 告警（平台整体不可用）需要在 5 分钟内响应，P1 告警（单个业务不可用）需要在 30 分钟内响应。值班表每周一上午 10 点轮换，值班热线为内线 8812。连续两次 P0 故障需要在 48 小时内提交复盘报告。",
+   "or.add]，表示把各个并行分支返回的列表拼接起来，而不是互相覆盖。如果没有 reducer，并行写同一个键会抛出 InvalidUpdateError。\n\n## 3. Send API：动态扇出\nSend API 用于 map-reduce 场景：在条件边里返回一组 Send(\"节点名\", 子状态) 对象，LangGraph 会为每个 Send 启动一个并行的节点实例。子任务数量在运行时才确定，这正是\"一个子问题派一个检索 Agent\"的实现方式。并发度可以用 max_concurrency 配置项限制。\n\n## 4. 条件边与循环\nadd_conditional_edges 接收一个路由函数，根据状态返回下一个节点名或 END。把边指回前面的节点就形成循环，例如\"审稿不通过 → 回到检索\"的反思回路。为防止死循环，应在状态里记录轮次，并设置最大轮数；LangGraph 自身也有 recursion_limit，默认值为 25 步。"
+  ],
+  "reference": "编译时配置 checkpointer，用同一个 thread_id 调用 graph.stream(None, config) 从最近检查点继续。"
+ },
+ {
+  "user_input": "LangGraph 默认的 recursion_limit 是多少？",
+  "response": "25 步。",
+  "retrieved_contexts": [
+   "回到检索\"的反思回路。为防止死循环，应在状态里记录轮次，并设置最大轮数；LangGraph 自身也有 recursion_limit，默认值为 25 步。\n\n## 5. Checkpointer 与断点续跑\n编译图时传入 checkpointer（如 MemorySaver、SqliteSaver、PostgresSaver），每执行完一个 super-step 就把状态快照保存下来。调用时通过 config 里的 thread_id 区分会话。程序崩溃后，用同一个 thread_id 再次调用 graph.stream(None, config)，就会从最近的检查点继续执行，已经完成的节点不会重跑。\n\n## 6. Human-in-the-loop\n在节点里调用 interrupt() 可以暂停图的执行并把数据抛给调用方，人工确认后用 Command(resume=值) 恢复。这个能力依赖 checkpointer，没有 checkpointer 时无法使用 interrupt。",
+   "or.add]，表示把各个并行分支返回的列表拼接起来，而不是互相覆盖。如果没有 reducer，并行写同一个键会抛出 InvalidUpdateError。\n\n## 3. Send API：动态扇出\nSend API 用于 map-reduce 场景：在条件边里返回一组 Send(\"节点名\", 子状态) 对象，LangGraph 会为每个 Send 启动一个并行的节点实例。子任务数量在运行时才确定，这正是\"一个子问题派一个检索 Agent\"的实现方式。并发度可以用 max_concurrency 配置项限制。\n\n## 4. 条件边与循环\nadd_conditional_edges 接收一个路由函数，根据状态返回下一个节点名或 END。把边指回前面的节点就形成循环，例如\"审稿不通过 → 回到检索\"的反思回路。为防止死循环，应在状态里记录轮次，并设置最大轮数；LangGraph 自身也有 recursion_limit，默认值为 25 步。",
+   "# LangGraph 核心概念学习笔记\n\n## 1. StateGraph 与状态\nLangGraph 用 StateGraph 描述一个有状态的工作流。状态通常用 TypedDict 定义，每个节点（node）是一个普通的 Python 函数，接收当前状态，返回需要更新的字段。节点之间用边（edge）连接，START 和 END 是两个特殊节点。\n\n## 2. Reducer：并行结果如何合并\n当多个节点同时写同一个字段时，需要 reducer 决定如何合并。最常见的写法是 Annotated[list, operator.add]，表示把各个并行分支返回的列表拼接起来，而不是互相覆盖。如果没有 reducer，并行写同一个键会抛出 InvalidUpdateError。",
+   "星河智能 Agent 平台运维手册（内部虚构示例文档，仅用于知识库测试）\n\n第一章 平台概况\n星河智能 Agent 平台于 2025 年 3 月上线，代号\"北斗\"，负责公司内部的客服问答、合同审查和周报生成三类业务。平台由网关层、编排层（基于 LangGraph）、工具层和模型层组成。模型层主力模型为 DeepSeek-V3，备用模型为通义千问 Qwen-Max，当主模型连续 3 次超时时自动切换到备用模型。\n\n第二章 关键配置\n单次 Agent 任务的默认超时时间为 45 秒，合同审查任务例外，超时时间放宽到 120 秒。并行工具调用的并发上限为 8。向量库使用 Chroma，每晚 2 点做一次全量备份，备份保留 14 天。知识库切块大小为 600 字，重叠 100 字。\n\n第三章 告警与值班\nP0 告警（平台整体不可用）需要在 5 分钟内响应，P1 告警（单个业务不可用）需要在 30 分钟内响应。值班表每周一上午 10 点轮换，值班热线为内线 8812。连续两次 P0 故障需要在 48 小时内提交复盘报告。"
+  ],
+  "reference": "默认 25 步。"
+ },
+ {
+  "user_input": "BM25 的 k1 和 b 参数分别控制什么，常用取值是多少？",
+  "response": "BM25 的 k1 控制词频饱和速度，常用取值 1.2 到 2.0；b 控制长度归一化强度，常用取值 0.75。",
+  "retrieved_contexts": [
+   "# 混合检索与重排序实践指南\n\n## BM25 关键词检索\nBM25 是经典的稀疏检索算法，基于词频（TF）和逆文档频率（IDF）打分，并对文档长度做归一化。它有两个超参数：k1 控制词频饱和速度，常用取值 1.2 到 2.0；b 控制长度归一化强度，常用 0.75。BM25 擅长精确匹配专有名词、型号、错误码等，但无法理解同义改写。中文文本需要先分词，常用 jieba 的搜索引擎模式 cut_for_search。\n\n## 向量检索\n向量检索（稠密检索）把查询和文档都编码成 embedding，用余弦相似度找最近邻。它能理解语义相近但用词不同的表达，跨语言检索也有一定能力，但对生僻专有名词和数字不敏感。常见向量库有 Chroma、Milvus、FAISS、Qdrant，Chroma 默认使用 HNSW 索引做近似最近邻搜索。",
+   "o-text transformer. arXiv e-prints, 2019. URL https://arxiv.org/abs/1910.10683.\n[52] Adam Roberts, Colin Raffel, and Noam Shazeer. How much knowledge can you pack into\nthe parameters of a language model? arXiv e-prints, 2020. URL https://arxiv.org/abs/\n2002.08910.\n[53] Stephen Robertson and Hugo Zaragoza. The probabilistic relevance framework: Bm25 and\nbeyond. Found. Trends Inf. Retr., 3(4):333–389, April 2009. ISSN 1554-0669. doi: 10.1561/\n1500000019. URL https://doi.org/10.1561/1500000019.",
+   "，但对生僻专有名词和数字不敏感。常见向量库有 Chroma、Milvus、FAISS、Qdrant，Chroma 默认使用 HNSW 索引做近似最近邻搜索。\n\n## RRF 融合\n倒数排名融合（Reciprocal Rank Fusion，RRF）把多路检索结果按名次融合：每个文档的得分为各路 1/(k + rank) 之和，常数 k 通常取 60。RRF 只依赖名次，不需要把 BM25 分数和余弦相似度归一化到同一量纲，因此实现简单且稳健，是混合检索最常用的融合方法。\n\n## 重排序（Rerank）\n召回阶段追求\"不漏\"，通常取 top 20 到 50；重排阶段用交叉编码器（cross-encoder）把查询和每个候选拼在一起逐对打分，精度更高但更慢，所以只对少量候选使用。常见重排模型有 bge-reranker-v2-m3、阿里云 gte-rerank-v2、Cohere Rerank。经验上，重排对 MRR（第一个正确结果的位置）提升最明显。",
+   "s dense retriever to a word overlap-based BM25 retriever [53]. Here, we replace\nRAG’s retriever with a ﬁxed BM25 system, and use BM25 retrieval scores as logits when calculating\np(z|x). Table 6 shows the results. For FEVER, BM25 performs best, perhaps since FEVER claims are\nheavily entity-centric and thus well-suited for word overlap-based retrieval. Differentiable retrieval\nimproves results on all other tasks, especially for Open-Domain QA, where it is crucial."
+  ],
+  "reference": "k1 控制词频饱和速度，常用 1.2 到 2.0；b 控制长度归一化强度，常用 0.75。"
+ },
+ {
+  "user_input": "RRF 融合的公式和常数 k 一般取多少？",
+  "response": "RRF 融合的公式为：每个文档的得分为各路 1/(k + rank) 之和；常数 k 通常取 60。",
+  "retrieved_contexts": [
+   "，但对生僻专有名词和数字不敏感。常见向量库有 Chroma、Milvus、FAISS、Qdrant，Chroma 默认使用 HNSW 索引做近似最近邻搜索。\n\n## RRF 融合\n倒数排名融合（Reciprocal Rank Fusion，RRF）把多路检索结果按名次融合：每个文档的得分为各路 1/(k + rank) 之和，常数 k 通常取 60。RRF 只依赖名次，不需要把 BM25 分数和余弦相似度归一化到同一量纲，因此实现简单且稳健，是混合检索最常用的融合方法。\n\n## 重排序（Rerank）\n召回阶段追求\"不漏\"，通常取 top 20 到 50；重排阶段用交叉编码器（cross-encoder）把查询和每个候选拼在一起逐对打分，精度更高但更慢，所以只对少量候选使用。常见重排模型有 bge-reranker-v2-m3、阿里云 gte-rerank-v2、Cohere Rerank。经验上，重排对 MRR（第一个正确结果的位置）提升最明显。",
+   "ns the answer and k − 1 distractor\ndocuments that do not contain the answer. To\nobtain a document that answers the question, we\nuse the Wikipedia paragraph that contains the\nanswer from the NaturalQuestions annotations.\nTo collect k − 1 distractor documents that do not\ncontain the answer, we use a retrieval system (Contriever, fine-tuned on MS-MARCO; Izacard et al.,\n2021) to retrieve the k − 1 Wikipedia chunks that\nare most relevant to the query and do not contain",
+   "n. In particular, we make controlled changes to the length of the input context\nand the position of the relevant information and\nmeasure changes in task performance.\n2.1 Experimental Setup\nIn the multi-document question answering task, the\nmodel inputs are (i) a question to answer and (ii) k\ndocuments (e.g., passages from Wikipedia), where\nexactly one of the documents contains the answer\n1nelsonliu.me/papers/lost-in-the-middle\nto the question and k − 1 “distractor” documents",
+   "VSRRQ\u0003\u0015\u0011\u0003\n$FW\u0003\u0017\u001d\u00037DNH\u0003SHSSHUVKDNHU\u0003\u0014\u0003IURP\u0003VLQNEDVLQ\u0003\u0014\u0003\n2EV\u0003\u0017\u001d\u00031RWKLQJ\u0003KDSSHQV\u0011\u0003\n$FW\u0003\u0018\u001d\u00037DNH\u0003SHSSHUVKDNHU\u0003\u0014\u0003IURP\u0003VLQNEDVLQ\u0003\u0014\u0003\n2EV\u0003\u0018\u001d\u00031RWKLQJ\u0003KDSSHQV\u0011\u0003\n\u000b\u0015E\f\u00035H$FW\u0003\u000b5HDVRQ\u0003\u000e\u0003$FW\f\nҼ\n<RX\u0003DUH\u0003LQ\u0003WKH\u0003PLGGOH\u0003RI\u0003D\u0003URRP\u0011\u0003/RRNLQJ\u0003TXLFNO\\\u0003DURXQG\u0003\n\\RX\u000f\u0003\\RX\u0003VHH\u0003D\u0003FDELQHW\u0003\u0019\u000f\u0003D\u0003FDELQHW\u0003\u0014\u000f\u0003D\u0003FRIIHH\u0003PDFKLQH\u0003\u0014\u000f\u0003\nD\u0003FRXQWHUWRS\u0003\u0016\u000f\u0003\u0003D\u0003VWRYH\u0003EXUQHU\u0003\u0014\u000f\u0003DQG\u0003D\u0003WRDVWHU\u0003\u0014\u0011\u0003\n<RXU\u0003WDVN\u0003LV\u0003WR\u001d\u00033XW\u0003VRPH\u0003SHSSHU\u0003VKDNHU\u0003RQ\u0003D\u0003GUDZHU\u0011\n\u000b\u0015\f\u0003$OI:RUOG\n\u000b\u0014\f\u0003+RWVSRW\u00034$"
+  ],
+  "reference": "得分为各路 1/(k+rank) 之和，k 通常取 60。"
+ },
+ {
+  "user_input": "为什么重排模型只用于少量候选？",
+  "response": "重排阶段用交叉编码器把查询和每个候选拼在一起逐对打分，精度更高但更慢，所以只对少量候选使用。",
+  "retrieved_contexts": [
+   "，但对生僻专有名词和数字不敏感。常见向量库有 Chroma、Milvus、FAISS、Qdrant，Chroma 默认使用 HNSW 索引做近似最近邻搜索。\n\n## RRF 融合\n倒数排名融合（Reciprocal Rank Fusion，RRF）把多路检索结果按名次融合：每个文档的得分为各路 1/(k + rank) 之和，常数 k 通常取 60。RRF 只依赖名次，不需要把 BM25 分数和余弦相似度归一化到同一量纲，因此实现简单且稳健，是混合检索最常用的融合方法。\n\n## 重排序（Rerank）\n召回阶段追求\"不漏\"，通常取 top 20 到 50；重排阶段用交叉编码器（cross-encoder）把查询和每个候选拼在一起逐对打分，精度更高但更慢，所以只对少量候选使用。常见重排模型有 bge-reranker-v2-m3、阿里云 gte-rerank-v2、Cohere Rerank。经验上，重排对 MRR（第一个正确结果的位置）提升最明显。",
+   "e-reranker-v2-m3、阿里云 gte-rerank-v2、Cohere Rerank。经验上，重排对 MRR（第一个正确结果的位置）提升最明显。\n\n## 切块策略\n切块太大会稀释相关信息，太小会丢失上下文。中文场景常用 300 到 800 字的块，并保留 10% 到 20% 的重叠，防止一句话被切断。递归切分会依次尝试段落、换行、句号等分隔符，尽量在语义边界切开。PDF 需要保留页码元数据，方便在答案中给出可核查的引用。\n\n## 评估指标\nHit@k 表示前 k 个结果中至少有一个相关文档的问题比例；MRR 是第一个相关结果排名倒数的平均值。Ragas 框架提供 faithfulness（答案是否忠于检索内容）、answer relevancy（答案是否切题）、context precision（相关上下文是否排在前面）等指标，通常用大模型作为评审。",
+   "out answer candidates if they do not occur\nin top 1000 documents for the query.\nCuratedTrec preprocessing The answers for CuratedTrec are given in the form of regular expressions, which has been suggested as a reason why it is unsuitable for answer-generation models [20].\nTo overcome this, we use a pre-processing step where we ﬁrst retrieve the top 1000 documents for\neach query, and use the answer that most frequently matches the regex pattern as the supervision",
+   "put context length (and thus latency and cost). These results, coupled with the\nobservation that models are often better at retrieving and using information at the start or end of\nthe input contexts, suggest that effective reranking of retrieved documents (pushing relevant information closer to the start of the input context) or\nranked list truncation (retrieving fewer documents\nwhen appropriate; Arampatzis et al., 2009) may be"
+  ],
+  "reference": "重排用交叉编码器逐对打分，精度高但慢，所以只对召回后的少量候选使用。"
+ },
+ {
+  "user_input": "北斗平台合同审查任务的超时时间是多少？",
+  "response": "北斗平台合同审查任务的超时时间是 120 秒。",
+  "retrieved_contexts": [
+   "星河智能 Agent 平台运维手册（内部虚构示例文档，仅用于知识库测试）\n\n第一章 平台概况\n星河智能 Agent 平台于 2025 年 3 月上线，代号\"北斗\"，负责公司内部的客服问答、合同审查和周报生成三类业务。平台由网关层、编排层（基于 LangGraph）、工具层和模型层组成。模型层主力模型为 DeepSeek-V3，备用模型为通义千问 Qwen-Max，当主模型连续 3 次超时时自动切换到备用模型。\n\n第二章 关键配置\n单次 Agent 任务的默认超时时间为 45 秒，合同审查任务例外，超时时间放宽到 120 秒。并行工具调用的并发上限为 8。向量库使用 Chroma，每晚 2 点做一次全量备份，备份保留 14 天。知识库切块大小为 600 字，重叠 100 字。\n\n第三章 告警与值班\nP0 告警（平台整体不可用）需要在 5 分钟内响应，P1 告警（单个业务不可用）需要在 30 分钟内响应。值班表每周一上午 10 点轮换，值班热线为内线 8812。连续两次 P0 故障需要在 48 小时内提交复盘报告。",
+   "ent QA task with 10 total retrieved documents.\nG.2 20 Total Retrieved Documents\nModel Index 0 Index 4 Index 9 Index 14 Index 19\nClaude-1.3 59.9% 55.9% 56.8% 57.2% 60.1%\nClaude-1.3 (100K) 59.8% 55.9% 57.0% 57.4% 60.0%\nGPT-3.5-Turbo 75.8% 57.2% 53.8% 55.4% 63.2%\nGPT-3.5-Turbo (16K) 75.7% 57.3% 54.1% 55.4% 63.1%\nMPT-30B-Instruct 53.7% 51.8% 52.2% 52.7% 56.3%\nLongChat-13B (16K) 68.6% 57.4% 55.3% 52.5% 55.0%",
+   "Q\u0003VHDUFK\u00030\\VWHUH\u0003\u000b&LUTXH\u0003\nGX\u00036ROHLO\f\u0011\n$FW\u0003\u0015\u001d\u00036HDUFK>0\\VWHUH\u0003\u000b&LUTXH\u0003GX\u00036ROHLO\f@\n2EV\u0003\u0015\u001d\u00030\\VWqUH\u0003\u000bP\\\u0010VWHHU\f\u0003\u0003LV\u0003ª\u0003+HOG\u0003LQ\u0003D\u0003FXVWRP\u0003WKHDWUH\u0003DW\u0003\nWKH\u00037UHDVXUH\u0003,VODQG\u0003+RWHO\u0003DQG\u0003&DVLQR\u0003ª\n7KRXJKW\u0003\u0016\u001d\u00030\\VWHUH\u0003LV\u0003KHOG\u0003LQ\u0003D\u0003FXVWRP\u0003WKHDWUH\u0003DW\u0003WKH\u0003\n7UHDVXUH\u0003,VODQG\u0003+RWHO\u0003DQG\u0003&DVLQR\u0011\u00036R\u0003,\u0003QHHG\u0003WR\u0003VHDUFK\u0003\n7UHDVXUH\u0003,VODQG\u0003+RWHO\u0003DQG\u0003&DVLQR\u0003QH[W\u0003DQG\u0003ILQG\u0003WKH\u0003QXPEHU\u0003\nRI\u0003URRPV\u0003LQ\u0003WKH\u0003KRWHO\u0011\n$FW\u0003\u0016\u001d\u00036HDUFK>7UHDVXUH\u0003,VODQG\u0003+RWHO\u0003DQG\u0003&DVLQR@\n2EV\u0003\u0016\u001d\u00037UHDVXUH\u0003,VODQG\u0003+RWHO\u0003DQG\u0003&DVLQR\u0003ª\u0003ZLWK\u0003\u0015\u000f\u001b\u001b\u0017\u0003URRPV\u0003\nDQG\u0003\u0015\u0015\u0013\u0003VXLWHV\u0003ª",
+   "53.7% 51.8% 52.2% 52.7% 56.3%\nLongChat-13B (16K) 68.6% 57.4% 55.3% 52.5% 55.0%\nTable 6: Model performance when evaluated on the multi-document QA task with 20 total retrieved documents.\nG.3 30 Total Retrieved Documents\nModel Index 0 Index 4 Index 9 Index 14 Index 19 Index 24 Index 29\nClaude-1.3 59.1% 55.1% 54.8% 55.7% 56.4% 56.2% 59.9%\nClaude-1.3 (100K) 59.1% 55.1% 54.9% 55.7% 56.6% 56.1% 60.0%\nGPT-3.5-Turbo (16K) 73.4% 55.1% 50.5% 50.9% 51.8% 54.9% 63.7%"
+  ],
+  "reference": "120 秒（默认任务为 45 秒）。"
+ },
+ {
+  "user_input": "星河平台的值班热线和 P0 告警响应时限是什么？",
+  "response": "值班热线为内线 8812；P0 告警（平台整体不可用）需要在 5 分钟内响应。",
+  "retrieved_contexts": [
+   "星河智能 Agent 平台运维手册（内部虚构示例文档，仅用于知识库测试）\n\n第一章 平台概况\n星河智能 Agent 平台于 2025 年 3 月上线，代号\"北斗\"，负责公司内部的客服问答、合同审查和周报生成三类业务。平台由网关层、编排层（基于 LangGraph）、工具层和模型层组成。模型层主力模型为 DeepSeek-V3，备用模型为通义千问 Qwen-Max，当主模型连续 3 次超时时自动切换到备用模型。\n\n第二章 关键配置\n单次 Agent 任务的默认超时时间为 45 秒，合同审查任务例外，超时时间放宽到 120 秒。并行工具调用的并发上限为 8。向量库使用 Chroma，每晚 2 点做一次全量备份，备份保留 14 天。知识库切块大小为 600 字，重叠 100 字。\n\n第三章 告警与值班\nP0 告警（平台整体不可用）需要在 5 分钟内响应，P1 告警（单个业务不可用）需要在 30 分钟内响应。值班表每周一上午 10 点轮换，值班热线为内线 8812。连续两次 P0 故障需要在 48 小时内提交复盘报告。",
+   "（单个业务不可用）需要在 30 分钟内响应。值班表每周一上午 10 点轮换，值班热线为内线 8812。连续两次 P0 故障需要在 48 小时内提交复盘报告。\n\n第四章 成本控制\n每个业务线每月的大模型调用预算为 3000 元，超出 80% 时系统自动发送预警邮件给业务负责人。为降低成本，平台对相同问题启用语义缓存，缓存命中阈值为余弦相似度 0.92，缓存有效期为 24 小时。\n\n第五章 发布流程\n新版 Prompt 上线前必须在评测集上跑回归测试，评测集包含 200 条样本，通过标准是准确率不低于上一版本且不低于 85%。发布采用灰度策略：先放量 10%，观察 2 小时无异常后全量。",
+   "LV\u0003\n7UHDVXUH\u0003,VODQG\u0011\u00037UHDVXUH\u0003\n,VODQG\u0003KDV\u0003\u0015\u000f\u001b\u001b\u0018\u0003URRPV\u000f\u0003VR\u0003\nWKH\u0003DQVZHU\u0003LV\u0003\u0015\u000f\u001b\u001b\u0018\u0011\n$QVZHU\u001d\u0003\u0015\u000f\u001b\u001b\u0018\n\u000b\u0014F\f\u0003$FW\u00102QO\\\u0003\n$FW\u0003\u0014\u001d\u00036HDUFK>&LUTXH\u0003GX\u00036ROHLO@\u0003\n2EV\u0003\u0014\u001d\u0003&LUTXH\u0003GX\u00036ROHLO\u0003LV\u0003D\u0003\n&DQDGLDQ\u0003HQWHUWDLQPHQW\u0003FRPSDQ\\ª\n$FW\u0003\u0015\u001d\u0003/RRNXS>0\\VWHUH@\u0003\n2EV\u0003\u0015\u001d\u00031R\u0003PRUH\u0003UHVXOWV\n$FW\u0003\u0016\u001d\u00036HDUFK>0\\VWHUH\u0003\u000b&LUTXH\u0003GX\u0003\n6ROHLO\u0003VKRZ\f@\u0003\n2EV\u0003\u0016\u001d\u0003&RXOG\u0003QRW\u0003ILQGª\n$FW\u0003\u0017\u001d\u00036HDUFK>0\\VWHUH\u0003\u000b&LUTXH\u0003GX\u0003\n6ROHLO\f@\u0003\n2EV\u0003\u0017\u001d\u00030\\VWqUH\u0003\u000bP\\\u0010VWHHU\f\u0003\u0003LV\u0003\nRQH\u0003RI\u0003VL[ª\n$FW\u0003\u0018\u001d\u0003/RRNXS>7UHDVXUH\u0003,VODQG\u0003\n+RWHO\u0003DQG\u0003&DVLQR@\u0003\nªª\u000bHQG\u0003ZLWKRXW\u0003DQVZHU",
+   "I\u0003VL[ª\n$FW\u0003\u0018\u001d\u0003/RRNXS>7UHDVXUH\u0003,VODQG\u0003\n+RWHO\u0003DQG\u0003&DVLQR@\u0003\nªª\u000bHQG\u0003ZLWKRXW\u0003DQVZHU\f\n\u000b\u0014G\f\u00035H$FW\u0003\u000b5HDVRQ\u0003\u000e\u0003$FW\f\n7KRXJKW\u0003\u0014\u001d\u0003,\u0003QHHG\u0003WR\u0003VHDUFK\u0003&LUTXH\u0003GX\u00036ROHLO\u0003VKRZ\u00030\\VWHUH\u000f\u0003\nILQG\u0003WKH\u0003KRWHO\u0003LW\u0003LV\u0003LQ\u000f\u0003WKHQ\u0003ILQG\u0003WKH\u0003QXPEHU\u0003RI\u0003URRPV\u0003LQ\u0003\nWKH\u0003KRWHO\u0011\n$FW\u0003\u0014\u001d\u00036HDUFK>&LUTXH\u0003GX\u00036ROHLO\u0003VKRZ\u00030\\VWHUH@\n2EV\u0003\u0014\u001d\u0003&RXOG\u0003QRW\u0003ILQG\u0003&LUTXH\u0003GX\u00036ROHLO\u0003VKRZ\u00030\\VWHUH\u0011\u0003\n6LPLODU\u001d\u0003>\n&LUTXH\u0003GX\u00036ROHLO\n\u0003ª\n7KRXJKW\u0003\u0015\u001d\u00037R\u0003ILQG\u0003WKH\u0003KRWHO\u000f\u0003,\u0003FDQ\u0003VHDUFK\u00030\\VWHUH\u0003\u000b&LUTXH\u0003\nGX\u00036ROHLO\f\u0011\n$FW\u0003\u0015\u001d\u00036HDUFK>0\\VWHUH\u0003\u000b&LUTXH\u0003GX\u00036ROHLO\f@"
+  ],
+  "reference": "值班热线内线 8812，P0 告警需 5 分钟内响应。"
+ },
+ {
+  "user_input": "语义缓存的命中阈值和有效期是多少？",
+  "response": "语义缓存的命中阈值为余弦相似度 0.92，缓存有效期为 24 小时。",
+  "retrieved_contexts": [
+   "（单个业务不可用）需要在 30 分钟内响应。值班表每周一上午 10 点轮换，值班热线为内线 8812。连续两次 P0 故障需要在 48 小时内提交复盘报告。\n\n第四章 成本控制\n每个业务线每月的大模型调用预算为 3000 元，超出 80% 时系统自动发送预警邮件给业务负责人。为降低成本，平台对相同问题启用语义缓存，缓存命中阈值为余弦相似度 0.92，缓存有效期为 24 小时。\n\n第五章 发布流程\n新版 Prompt 上线前必须在评测集上跑回归测试，评测集包含 200 条样本，通过标准是准确率不低于上一版本且不低于 85%。发布采用灰度策略：先放量 10%，观察 2 小时无异常后全量。",
+   "al Linguistics, 2019. URL https://tomkwiat.users.x20web.corp.google.com/papers/\nnatural-questions/main-1455-kwiatkowski.pdf .\n[30] Guillaume Lample, Alexandre Sablayrolles, Marc’ Aurelio Ranzato, Ludovic Denoyer, and\nHerve Jegou. Large memory layers with product keys. In H. Wallach, H. Larochelle,\nA. Beygelzimer, F. d’ Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 8548–8559. Curran Associates, Inc., 2019. URL http:",
+   "SN 1554-0669. doi: 10.1561/\n1500000019. URL https://doi.org/10.1561/1500000019.\n[54] Irene Solaiman, Miles Brundage, Jack Clark, Amanda Askell, Ariel Herbert-V oss, Jeff Wu, Alec\nRadford, and Jian-Bing Wang. Release strategies and the social impacts of language models.\nArXiv, abs/1908.09203, 2019.\n[55] Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, and Rob Fergus. End-to-end memory networks. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett, editors,Advances",
+   "el capabilities. In Proc. of CHI.\nDacheng Li, Rulin Shao, Anze Xie, Ying Sheng,\nLianmin Zheng, Joseph E. Gonzalez, Ion Stoica,\nXuezhe Ma, , and Hao Zhang. 2023. How long\ncan open-source LLMs truly promise on context\nlength?\nAlex Mallen, Akari Asai, Victor Zhong, Rajarshi\nDas, Daniel Khashabi, and Hannaneh Hajishirzi.\n2023. When not to trust language models: Investigating effectiveness of parametric and nonparametric memories. In Proc. of ACL.\nSewon Min, Julian Michael, Hannaneh Hajishirzi,"
+  ],
+  "reference": "命中阈值为余弦相似度 0.92，有效期 24 小时。"
+ }
+]

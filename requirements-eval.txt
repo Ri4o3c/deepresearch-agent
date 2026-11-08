@@ -1,0 +1,7 @@
+# Ragas 评测专用，装在独立的 .venv-eval（ragas 会把主环境 langchain-openai 降级）
+# python -m venv .venv-eval; .venv-eval\Scripts\pip install -r requirements-eval.txt
+ragas==0.4.3
+langchain==0.3.30
+langchain-core==0.3.86
+langchain-openai==0.3.35
+langchain-community==0.3.31

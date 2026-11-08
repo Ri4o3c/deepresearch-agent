@@ -1,0 +1,17 @@
+ M .idea/runConfigurations/web_dev.xml
+ M app/researcher.py
+ M app/search/__init__.py
+ M docs/interview-notes.md
+ M docs/progress.md
+ M docs/search.md
+?? .idea/vcs.xml
+?? app/search/session.py
+?? docs/evidence/
+?? eval/rag/results/test_rag_final.json
+?? eval/rag/results/test_rag_fix.json
+?? eval/rag/results/test_round.json
+?? eval/server_roundrag_round1.json
+?? eval/server_roundrag_round2.json
+?? eval/server_roundrag_round3.json
+?? tests/run_speed_round.py
+?? tests/test_speed_token.py

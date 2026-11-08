@@ -1,0 +1,92 @@
+[
+ {
+  "name": "t_chunk_size",
+  "ok": true,
+  "s": 0.0
+ },
+ {
+  "name": "t_chunk_overlap",
+  "ok": true,
+  "s": 0.0
+ },
+ {
+  "name": "t_chunk_short_and_empty",
+  "ok": true,
+  "s": 0.0
+ },
+ {
+  "name": "t_pdf_pages",
+  "ok": true,
+  "s": 0.71
+ },
+ {
+  "name": "t_gbk_txt",
+  "ok": true,
+  "s": 0.01
+ },
+ {
+  "name": "t_tokenize",
+  "ok": true,
+  "s": 0.58
+ },
+ {
+  "name": "t_rrf",
+  "ok": true,
+  "s": 0.0
+ },
+ {
+  "name": "t_add",
+  "ok": true,
+  "s": 3.34
+ },
+ {
+  "name": "t_bad_ext",
+  "ok": true,
+  "s": 0.0
+ },
+ {
+  "name": "t_modes",
+  "ok": true,
+  "s": 6.1
+ },
+ {
+  "name": "t_bm25_refresh_after_delete",
+  "ok": true,
+  "s": 0.04
+ },
+ {
+  "name": "t_api_upload_list",
+  "ok": true,
+  "s": 1.88
+ },
+ {
+  "name": "t_api_mixed_upload",
+  "ok": true,
+  "s": 1.65
+ },
+ {
+  "name": "t_api_reject",
+  "ok": true,
+  "s": 0.06
+ },
+ {
+  "name": "t_api_file_and_search",
+  "ok": true,
+  "s": 3.14
+ },
+ {
+  "name": "t_api_delete",
+  "ok": true,
+  "s": 0.05
+ },
+ {
+  "name": "t_kb_search_tool",
+  "ok": true,
+  "s": 3.15
+ },
+ {
+  "name": "t_researcher_local",
+  "ok": true,
+  "s": 14.56
+ }
+]

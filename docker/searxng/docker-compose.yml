@@ -1,0 +1,18 @@
+# SearXNG 元搜索（替代 Tavily）：只绑定本机 127.0.0.1:8080
+# 密钥从同目录 .env 的 SEARXNG_SECRET 读取（.env 不提交，见 .env.example）
+# Required input guard only; signing is supplied by the rendered mount, not container env.
+x-required-signing-key: ${SEARXNG_SECRET:?required configuration missing}
+
+services:
+  searxng:
+    image: docker.io/searxng/searxng:latest
+    container_name: searxng
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8080:8080
+    volumes:
+      - ./settings.runtime.yml:/etc/searxng/settings.yml:ro
+    environment:
+      SEARXNG_BASE_URL: http://localhost:8080/
+    extra_hosts:
+      - host.docker.internal:host-gateway

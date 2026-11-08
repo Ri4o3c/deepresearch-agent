@@ -1,0 +1,39 @@
+test_all_fail_raises (tests.test_search.FallbackTest.test_all_fail_raises) ... 搜索 a 失败，切换下一个：x
+ok
+test_enrich_and_truncate (tests.test_search.FallbackTest.test_enrich_and_truncate) ... ok
+test_enrich_keeps_snippet_on_fail (tests.test_search.FallbackTest.test_enrich_keeps_snippet_on_fail) ... ok
+test_error_then_empty_then_ok (tests.test_search.FallbackTest.test_error_then_empty_then_ok) ... 搜索 a 失败，切换下一个：down
+搜索 b 无结果，切换下一个
+ok
+test_first_ok_skips_rest (tests.test_search.FallbackTest.test_first_ok_skips_rest) ... ok
+test_order_env (tests.test_search.FallbackTest.test_order_env) ... ok
+test_http_error_raises (tests.test_search.SearXNGTest.test_http_error_raises) ... ok
+test_parse_and_normalize (tests.test_search.SearXNGTest.test_parse_and_normalize) ... ok
+test_disabled (tests.test_observability.NoopTest.test_disabled) ... ok
+test_span_propagates_user_error (tests.test_observability.NoopTest.test_span_propagates_user_error) ... ok
+test_context_and_local_pages (tests.test_speed_token.BudgetTests.test_context_and_local_pages) ... ok
+test_fetch_dedupe_and_zero (tests.test_speed_token.BudgetTests.test_fetch_dedupe_and_zero) ... ok
+test_mock_evidence (tests.test_speed_token.BudgetTests.test_mock_evidence) ... ok
+test_relevance_budget (tests.test_speed_token.BudgetTests.test_relevance_budget) ... ok
+test_rewrite_ids_and_kb_fallback (tests.test_speed_token.BudgetTests.test_rewrite_ids_and_kb_fallback) ... ok
+test_concurrency_and_scope (tests.test_speed_token.CacheTests.test_concurrency_and_scope) ... ok
+test_endpoint_and_fetch_key (tests.test_speed_token.CacheTests.test_endpoint_and_fetch_key) ... ok
+test_key_and_bypass (tests.test_speed_token.CacheTests.test_key_and_bypass) ... ok
+test_no_failure_or_empty_cache (tests.test_speed_token.CacheTests.test_no_failure_or_empty_cache) ... 搜索 a 无结果，切换下一个
+搜索 a 无结果，切换下一个
+搜索 a 失败，切换下一个：down
+搜索 a 失败，切换下一个：down
+ok
+test_ttl_capacity_and_copy (tests.test_speed_token.CacheTests.test_ttl_capacity_and_copy) ... ok
+test_sse_and_resume_mock_contract (tests.test_speed_token.ContractTests.test_sse_and_resume_mock_contract) ... ok
+test_writer_reference_remap (tests.test_speed_token.ContractTests.test_writer_reference_remap) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.069s
+
+OK
+FIXTURE_EVIDENCE {"after_context_chars": 6000, "before_context_chars": 12086, "cold": {"cache_bypass": 0, "cache_hits": 0, "cache_misses": 1, "context_chars": 0, "fetch_calls": 2, "search_calls": 1}, "mode": "deterministic_mock", "new_fetch_top": 2, "old_fetch_top": 3, "real_llm_calls": 0, "real_research_requests": 0, "tokens": null, "warm": {"cache_bypass": 0, "cache_hits": 1, "cache_misses": 1, "context_chars": 0, "fetch_calls": 2, "search_calls": 1}}
+    [重试] 技术问题… 改写查询后共 3 条
+    [过滤] 技术问题… 保留 3/3 条（本地 1）
+    [网页检索失败] RuntimeError: offline
+{"started": "2026-11-06T15:27:30.125735+08:00", "ended": "2026-11-06T15:27:48.370370+08:00", "tests": 22, "failures": 0, "errors": 0, "skipped": 0, "successful": true, "real_research_requests": 0, "real_llm_calls": 0, "mode": "offline_mock"}
